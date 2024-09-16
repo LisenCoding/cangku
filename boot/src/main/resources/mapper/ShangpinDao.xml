@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.ShangpinDao">
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        a.id as id
+        ,a.cangku_id as cangkuId
+        ,a.shangpin_name as shangpinName
+        ,a.shangpin_uuid_number as shangpinUuidNumber
+        ,a.shangpin_photo as shangpinPhoto
+        ,a.shangpin_types as shangpinTypes
+        ,a.shangpin_kucun_number as shangpinKucunNumber
+        ,a.shangpin_new_money as shangpinNewMoney
+        ,a.shangpin_content as shangpinContent
+        ,a.shangxia_types as shangxiaTypes
+        ,a.shangpin_delete as shangpinDelete
+        ,a.insert_time as insertTime
+        ,a.create_time as createTime
+    </sql>
+    <select id="selectListView" parameterType="map" resultType="com.entity.view.ShangpinView" >
+        SELECT
+        <include refid="Base_Column_List" />
+        <!-- 级联表的字段 -->
+        ,cangku.cangku_name as cangkuName
+        ,cangku.cangku_uuid_number as cangkuUuidNumber
+        ,cangku.cangku_photo as cangkuPhoto
+        ,cangku.cangku_address as cangkuAddress
+        ,cangku.cangku_types as cangkuTypes
+        ,cangku.cangku_content as cangkuContent
+        ,cangku.cangku_delete as cangkuDelete
+
+        FROM shangpin  a
+        left JOIN cangku cangku ON a.cangku_id = cangku.id
+
+        <where>
+            <if test="params.ids != null">
+                and a.id in
+                <foreach item="item" index="index" collection="params.ids" open="(" separator="," close=")">
+                #{item}
+                </foreach>
+            </if>
+            <if test="params.cangkuId != null and params.cangkuId != ''">
+                and (
+                    a.cangku_id = #{params.cangkuId}
+                )
+            </if>
+            <if test=" params.shangpinName != '' and params.shangpinName != null and params.shangpinName != 'null' ">
+                and a.shangpin_name like CONCAT('%',#{params.shangpinName},'%')
+            </if>
+            <if test=" params.shangpinUuidNumber != '' and params.shangpinUuidNumber != null and params.shangpinUuidNumber != 'null' ">
+                and a.shangpin_uuid_number like CONCAT('%',#{params.shangpinUuidNumber},'%')
+            </if>
+            <if test="params.shangpinTypes != null and params.shangpinTypes != ''">
+                and a.shangpin_types = #{params.shangpinTypes}
+            </if>
+            <if test="params.shangpinKucunNumberStart != null and params.shangpinKucunNumberStart != ''">
+                <![CDATA[  and a.shangpin_kucun_number >= #{params.shangpinKucunNumberStart}   ]]>
+            </if>
+            <if test="params.shangpinKucunNumberEnd != null and params.shangpinKucunNumberEnd != ''">
+                <![CDATA[  and a.shangpin_kucun_number <= #{params.shangpinKucunNumberEnd}   ]]>
+            </if>
+             <if test="params.shangpinKucunNumber != null and params.shangpinKucunNumber != ''">
+                and a.shangpin_kucun_number = #{params.shangpinKucunNumber}
+             </if>
+            <if test="params.shangpinNewMoneyStart != null ">
+                <![CDATA[  and a.shangpin_new_money >= #{params.shangpinNewMoneyStart}   ]]>
+            </if>
+            <if test="params.shangpinNewMoneyEnd != null ">
+                <![CDATA[  and a.shangpin_new_money <= #{params.shangpinNewMoneyEnd}   ]]>
+            </if>
+            <if test="params.shangpinNewMoney != null and params.shangpinNewMoney != ''">
+                and a.shangpin_new_money = #{params.shangpinNewMoney}
+            </if>
+            <if test=" params.shangpinContent != '' and params.shangpinContent != null and params.shangpinContent != 'null' ">
+                and a.shangpin_content like CONCAT('%',#{params.shangpinContent},'%')
+            </if>
+            <if test="params.shangxiaTypes != null and params.shangxiaTypes != ''">
+                and a.shangxia_types = #{params.shangxiaTypes}
+            </if>
+            <if test="params.shangpinDeleteStart != null and params.shangpinDeleteStart != ''">
+                <![CDATA[  and a.shangpin_delete >= #{params.shangpinDeleteStart}   ]]>
+            </if>
+            <if test="params.shangpinDeleteEnd != null and params.shangpinDeleteEnd != ''">
+                <![CDATA[  and a.shangpin_delete <= #{params.shangpinDeleteEnd}   ]]>
+            </if>
+             <if test="params.shangpinDelete != null and params.shangpinDelete != ''">
+                and a.shangpin_delete = #{params.shangpinDelete}
+             </if>
+            <if test=" params.insertTimeStart != '' and params.insertTimeStart != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(a.insert_time) >= UNIX_TIMESTAMP(#{params.insertTimeStart}) ]]>
+            </if>
+            <if test=" params.insertTimeEnd != '' and params.insertTimeEnd != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(a.insert_time) <= UNIX_TIMESTAMP(#{params.insertTimeEnd}) ]]>
+            </if>
+            <if test="params.insertTime != null and params.insertTime != ''">
+                and a.insert_time = #{params.insertTime}
+            </if>
+
+                <!-- 判断仓库的id不为空 -->
+            <if test=" params.cangkuIdNotNull != '' and params.cangkuIdNotNull != null and params.cangkuIdNotNull != 'null' ">
+                and a.cangku_id IS NOT NULL
+            </if>
+            <if test=" params.cangkuName != '' and params.cangkuName != null and params.cangkuName != 'null' ">
+                and cangku.cangku_name like CONCAT('%',#{params.cangkuName},'%')
+            </if>
+            <if test=" params.cangkuUuidNumber != '' and params.cangkuUuidNumber != null and params.cangkuUuidNumber != 'null' ">
+                and cangku.cangku_uuid_number like CONCAT('%',#{params.cangkuUuidNumber},'%')
+            </if>
+            <if test=" params.cangkuAddress != '' and params.cangkuAddress != null and params.cangkuAddress != 'null' ">
+                and cangku.cangku_address like CONCAT('%',#{params.cangkuAddress},'%')
+            </if>
+            <if test="params.cangkuTypes != null  and params.cangkuTypes != ''">
+                and cangku.cangku_types = #{params.cangkuTypes}
+            </if>
+
+            <if test=" params.cangkuContent != '' and params.cangkuContent != null and params.cangkuContent != 'null' ">
+                and cangku.cangku_content like CONCAT('%',#{params.cangkuContent},'%')
+            </if>
+            <if test="params.cangkuDeleteStart != null  and params.cangkuDeleteStart != '' ">
+                <![CDATA[  and cangku.cangku_delete >= #{params.cangkuDeleteStart}   ]]>
+            </if>
+            <if test="params.cangkuDeleteEnd != null  and params.cangkuDeleteEnd != '' ">
+                <![CDATA[  and cangku.cangku_delete <= #{params.cangkuDeleteEnd}   ]]>
+            </if>
+            <if test="params.cangkuDelete != null  and params.cangkuDelete != '' ">
+                and cangku.cangku_delete = #{params.cangkuDelete}
+            </if>
+            <if test=" params.insertTimeStart != '' and params.insertTimeStart != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(cangku.insert_time) >= UNIX_TIMESTAMP(#{params.insertTimeStart}) ]]>
+            </if>
+            <if test=" params.insertTimeEnd != '' and params.insertTimeEnd != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(cangku.insert_time) <= UNIX_TIMESTAMP(#{params.insertTimeEnd}) ]]>
+            </if>
+            <if test="params.insertTime != null and params.insertTime != ''">
+                and a.insert_time = #{params.insertTime}
+            </if>
+        </where>
+        order by a.${params.sort} ${params.order}
+    </select>
+
+</mapper>

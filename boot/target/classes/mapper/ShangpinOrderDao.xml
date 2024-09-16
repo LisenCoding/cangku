@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.ShangpinOrderDao">
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        a.id as id
+        ,a.shangpin_order_uuid_number as shangpinOrderUuidNumber
+        ,a.address_id as addressId
+        ,a.shangpin_id as shangpinId
+        ,a.cheliang_id as cheliangId
+        ,a.siji_id as sijiId
+        ,a.yonghu_id as yonghuId
+        ,a.buy_number as buyNumber
+        ,a.shangpin_order_true_price as shangpinOrderTruePrice
+        ,a.shangpin_order_types as shangpinOrderTypes
+        ,a.insert_time as insertTime
+        ,a.create_time as createTime
+    </sql>
+    <select id="selectListView" parameterType="map" resultType="com.entity.view.ShangpinOrderView" >
+        SELECT
+        <include refid="Base_Column_List" />
+        <!-- 级联表的字段 -->
+        ,address.yonghu_id as addressYonghuId
+        ,address.address_name as addressName
+        ,address.address_phone as addressPhone
+        ,address.address_dizhi as addressDizhi
+        ,address.isdefault_types as isdefaultTypes
+        ,cheliang.cheliang_name as cheliangName
+        ,cheliang.cheliang_uuid_number as cheliangUuidNumber
+        ,cheliang.cheliang_photo as cheliangPhoto
+        ,cheliang.cheliang_paizhao as cheliangPaizhao
+        ,cheliang.cheliang_types as cheliangTypes
+        ,cheliang.cheliang_content as cheliangContent
+        ,cheliang.cheliang_delete as cheliangDelete
+        ,shangpin.shangpin_name as shangpinName
+        ,shangpin.shangpin_uuid_number as shangpinUuidNumber
+        ,shangpin.shangpin_photo as shangpinPhoto
+        ,shangpin.shangpin_types as shangpinTypes
+        ,shangpin.shangpin_kucun_number as shangpinKucunNumber
+        ,shangpin.shangpin_new_money as shangpinNewMoney
+        ,shangpin.shangpin_content as shangpinContent
+        ,shangpin.shangxia_types as shangxiaTypes
+        ,shangpin.shangpin_delete as shangpinDelete
+        ,siji.siji_uuid_number as sijiUuidNumber
+        ,siji.siji_name as sijiName
+        ,siji.siji_phone as sijiPhone
+        ,siji.siji_id_number as sijiIdNumber
+        ,siji.siji_photo as sijiPhoto
+        ,siji.sex_types as sexTypes
+        ,siji.siji_email as sijiEmail
+        ,yonghu.yonghu_uuid_number as yonghuUuidNumber
+        ,yonghu.yonghu_name as yonghuName
+        ,yonghu.yonghu_phone as yonghuPhone
+        ,yonghu.yonghu_id_number as yonghuIdNumber
+        ,yonghu.yonghu_photo as yonghuPhoto
+        ,yonghu.new_money as newMoney
+        ,yonghu.yonghu_email as yonghuEmail
+
+        FROM shangpin_order  a
+        left JOIN address address ON a.address_id = address.id
+        left JOIN cheliang cheliang ON a.cheliang_id = cheliang.id
+        left JOIN shangpin shangpin ON a.shangpin_id = shangpin.id
+        left JOIN siji siji ON a.siji_id = siji.id
+        left JOIN yonghu yonghu ON a.yonghu_id = yonghu.id
+
+        <where>
+            <if test="params.ids != null">
+                and a.id in
+                <foreach item="item" index="index" collection="params.ids" open="(" separator="," close=")">
+                #{item}
+                </foreach>
+            </if>
+            <if test=" params.shangpinOrderUuidNumber != '' and params.shangpinOrderUuidNumber != null and params.shangpinOrderUuidNumber != 'null' ">
+                and a.shangpin_order_uuid_number like CONCAT('%',#{params.shangpinOrderUuidNumber},'%')
+            </if>
+            <if test="params.addressId != null and params.addressId != ''">
+                and (
+                    a.address_id = #{params.addressId}
+                )
+            </if>
+            <if test="params.shangpinId != null and params.shangpinId != ''">
+                and (
+                    a.shangpin_id = #{params.shangpinId}
+                )
+            </if>
+            <if test="params.cheliangId != null and params.cheliangId != ''">
+                and (
+                    a.cheliang_id = #{params.cheliangId}
+                )
+            </if>
+            <if test="params.sijiId != null and params.sijiId != ''">
+                and (
+                    a.siji_id = #{params.sijiId}
+                )
+            </if>
+            <if test="params.yonghuId != null and params.yonghuId != ''">
+                and (
+                    a.yonghu_id = #{params.yonghuId}
+                )
+            </if>
+            <if test="params.buyNumberStart != null and params.buyNumberStart != ''">
+                <![CDATA[  and a.buy_number >= #{params.buyNumberStart}   ]]>
+            </if>
+            <if test="params.buyNumberEnd != null and params.buyNumberEnd != ''">
+                <![CDATA[  and a.buy_number <= #{params.buyNumberEnd}   ]]>
+            </if>
+             <if test="params.buyNumber != null and params.buyNumber != ''">
+                and a.buy_number = #{params.buyNumber}
+             </if>
+            <if test="params.shangpinOrderTruePriceStart != null ">
+                <![CDATA[  and a.shangpin_order_true_price >= #{params.shangpinOrderTruePriceStart}   ]]>
+            </if>
+            <if test="params.shangpinOrderTruePriceEnd != null ">
+                <![CDATA[  and a.shangpin_order_true_price <= #{params.shangpinOrderTruePriceEnd}   ]]>
+            </if>
+            <if test="params.shangpinOrderTruePrice != null and params.shangpinOrderTruePrice != ''">
+                and a.shangpin_order_true_price = #{params.shangpinOrderTruePrice}
+            </if>
+            <if test="params.shangpinOrderTypes != null and params.shangpinOrderTypes != ''">
+                and a.shangpin_order_types = #{params.shangpinOrderTypes}
+            </if>
+            <if test=" params.insertTimeStart != '' and params.insertTimeStart != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(a.insert_time) >= UNIX_TIMESTAMP(#{params.insertTimeStart}) ]]>
+            </if>
+            <if test=" params.insertTimeEnd != '' and params.insertTimeEnd != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(a.insert_time) <= UNIX_TIMESTAMP(#{params.insertTimeEnd}) ]]>
+            </if>
+            <if test="params.insertTime != null and params.insertTime != ''">
+                and a.insert_time = #{params.insertTime}
+            </if>
+
+                <!-- 判断收货地址的id不为空 -->
+            <if test=" params.addressIdNotNull != '' and params.addressIdNotNull != null and params.addressIdNotNull != 'null' ">
+                and a.address_id IS NOT NULL
+            </if>
+            <if test=" params.addressName != '' and params.addressName != null and params.addressName != 'null' ">
+                and address.address_name like CONCAT('%',#{params.addressName},'%')
+            </if>
+            <if test=" params.addressPhone != '' and params.addressPhone != null and params.addressPhone != 'null' ">
+                and address.address_phone like CONCAT('%',#{params.addressPhone},'%')
+            </if>
+            <if test=" params.addressDizhi != '' and params.addressDizhi != null and params.addressDizhi != 'null' ">
+                and address.address_dizhi like CONCAT('%',#{params.addressDizhi},'%')
+            </if>
+            <if test="params.isdefaultTypes != null  and params.isdefaultTypes != ''">
+                and address.isdefault_types = #{params.isdefaultTypes}
+            </if>
+
+            <if test=" params.insertTimeStart != '' and params.insertTimeStart != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(address.insert_time) >= UNIX_TIMESTAMP(#{params.insertTimeStart}) ]]>
+            </if>
+            <if test=" params.insertTimeEnd != '' and params.insertTimeEnd != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(address.insert_time) <= UNIX_TIMESTAMP(#{params.insertTimeEnd}) ]]>
+            </if>
+            <if test="params.insertTime != null and params.insertTime != ''">
+                and a.insert_time = #{params.insertTime}
+            </if>
+            <if test=" params.updateTimeStart != '' and params.updateTimeStart != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(address.update_time) >= UNIX_TIMESTAMP(#{params.updateTimeStart}) ]]>
+            </if>
+            <if test=" params.updateTimeEnd != '' and params.updateTimeEnd != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(address.update_time) <= UNIX_TIMESTAMP(#{params.updateTimeEnd}) ]]>
+            </if>
+            <if test="params.updateTime != null and params.updateTime != ''">
+                and a.update_time = #{params.updateTime}
+            </if>
+                <!-- 判断车辆的id不为空 -->
+            <if test=" params.cheliangIdNotNull != '' and params.cheliangIdNotNull != null and params.cheliangIdNotNull != 'null' ">
+                and a.cheliang_id IS NOT NULL
+            </if>
+            <if test=" params.cheliangName != '' and params.cheliangName != null and params.cheliangName != 'null' ">
+                and cheliang.cheliang_name like CONCAT('%',#{params.cheliangName},'%')
+            </if>
+            <if test=" params.cheliangUuidNumber != '' and params.cheliangUuidNumber != null and params.cheliangUuidNumber != 'null' ">
+                and cheliang.cheliang_uuid_number like CONCAT('%',#{params.cheliangUuidNumber},'%')
+            </if>
+            <if test=" params.cheliangPaizhao != '' and params.cheliangPaizhao != null and params.cheliangPaizhao != 'null' ">
+                and cheliang.cheliang_paizhao like CONCAT('%',#{params.cheliangPaizhao},'%')
+            </if>
+            <if test="params.cheliangTypes != null  and params.cheliangTypes != ''">
+                and cheliang.cheliang_types = #{params.cheliangTypes}
+            </if>
+
+            <if test=" params.cheliangContent != '' and params.cheliangContent != null and params.cheliangContent != 'null' ">
+                and cheliang.cheliang_content like CONCAT('%',#{params.cheliangContent},'%')
+            </if>
+            <if test="params.cheliangDeleteStart != null  and params.cheliangDeleteStart != '' ">
+                <![CDATA[  and cheliang.cheliang_delete >= #{params.cheliangDeleteStart}   ]]>
+            </if>
+            <if test="params.cheliangDeleteEnd != null  and params.cheliangDeleteEnd != '' ">
+                <![CDATA[  and cheliang.cheliang_delete <= #{params.cheliangDeleteEnd}   ]]>
+            </if>
+            <if test="params.cheliangDelete != null  and params.cheliangDelete != '' ">
+                and cheliang.cheliang_delete = #{params.cheliangDelete}
+            </if>
+            <if test=" params.insertTimeStart != '' and params.insertTimeStart != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(cheliang.insert_time) >= UNIX_TIMESTAMP(#{params.insertTimeStart}) ]]>
+            </if>
+            <if test=" params.insertTimeEnd != '' and params.insertTimeEnd != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(cheliang.insert_time) <= UNIX_TIMESTAMP(#{params.insertTimeEnd}) ]]>
+            </if>
+            <if test="params.insertTime != null and params.insertTime != ''">
+                and a.insert_time = #{params.insertTime}
+            </if>
+                <!-- 判断商品的id不为空 -->
+            <if test=" params.shangpinIdNotNull != '' and params.shangpinIdNotNull != null and params.shangpinIdNotNull != 'null' ">
+                and a.shangpin_id IS NOT NULL
+            </if>
+            <if test="params.cangkuId != null  and params.cangkuId != ''">
+                and shangpin.cangku_id = #{params.cangkuId}
+            </if>
+            <if test=" params.shangpinName != '' and params.shangpinName != null and params.shangpinName != 'null' ">
+                and shangpin.shangpin_name like CONCAT('%',#{params.shangpinName},'%')
+            </if>
+            <if test=" params.shangpinUuidNumber != '' and params.shangpinUuidNumber != null and params.shangpinUuidNumber != 'null' ">
+                and shangpin.shangpin_uuid_number like CONCAT('%',#{params.shangpinUuidNumber},'%')
+            </if>
+            <if test="params.shangpinTypes != null  and params.shangpinTypes != ''">
+                and shangpin.shangpin_types = #{params.shangpinTypes}
+            </if>
+
+            <if test="params.shangpinKucunNumberStart != null  and params.shangpinKucunNumberStart != '' ">
+                <![CDATA[  and shangpin.shangpin_kucun_number >= #{params.shangpinKucunNumberStart}   ]]>
+            </if>
+            <if test="params.shangpinKucunNumberEnd != null  and params.shangpinKucunNumberEnd != '' ">
+                <![CDATA[  and shangpin.shangpin_kucun_number <= #{params.shangpinKucunNumberEnd}   ]]>
+            </if>
+            <if test="params.shangpinKucunNumber != null  and params.shangpinKucunNumber != '' ">
+                and shangpin.shangpin_kucun_number = #{params.shangpinKucunNumber}
+            </if>
+            <if test="params.shangpinNewMoneyStart != null ">
+                <![CDATA[  and shangpin.shangpin_new_money >= #{params.shangpinNewMoneyStart}   ]]>
+            </if>
+            <if test="params.shangpinNewMoneyEnd != null ">
+                <![CDATA[  and shangpin.shangpin_new_money <= #{params.shangpinNewMoneyEnd}   ]]>
+            </if>
+            <if test="params.shangpinNewMoney != null and params.shangpinNewMoney != ''">
+                and a.shangpin_new_money = #{params.shangpinNewMoney}
+            </if>
+            <if test=" params.shangpinContent != '' and params.shangpinContent != null and params.shangpinContent != 'null' ">
+                and shangpin.shangpin_content like CONCAT('%',#{params.shangpinContent},'%')
+            </if>
+            <if test="params.shangxiaTypes != null  and params.shangxiaTypes != ''">
+                and shangpin.shangxia_types = #{params.shangxiaTypes}
+            </if>
+
+            <if test="params.shangpinDeleteStart != null  and params.shangpinDeleteStart != '' ">
+                <![CDATA[  and shangpin.shangpin_delete >= #{params.shangpinDeleteStart}   ]]>
+            </if>
+            <if test="params.shangpinDeleteEnd != null  and params.shangpinDeleteEnd != '' ">
+                <![CDATA[  and shangpin.shangpin_delete <= #{params.shangpinDeleteEnd}   ]]>
+            </if>
+            <if test="params.shangpinDelete != null  and params.shangpinDelete != '' ">
+                and shangpin.shangpin_delete = #{params.shangpinDelete}
+            </if>
+            <if test=" params.insertTimeStart != '' and params.insertTimeStart != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(shangpin.insert_time) >= UNIX_TIMESTAMP(#{params.insertTimeStart}) ]]>
+            </if>
+            <if test=" params.insertTimeEnd != '' and params.insertTimeEnd != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(shangpin.insert_time) <= UNIX_TIMESTAMP(#{params.insertTimeEnd}) ]]>
+            </if>
+            <if test="params.insertTime != null and params.insertTime != ''">
+                and a.insert_time = #{params.insertTime}
+            </if>
+                <!-- 判断司机的id不为空 -->
+            <if test=" params.sijiIdNotNull != '' and params.sijiIdNotNull != null and params.sijiIdNotNull != 'null' ">
+                and a.siji_id IS NOT NULL
+            </if>
+            <if test=" params.sijiUuidNumber != '' and params.sijiUuidNumber != null and params.sijiUuidNumber != 'null' ">
+                and siji.siji_uuid_number like CONCAT('%',#{params.sijiUuidNumber},'%')
+            </if>
+            <if test=" params.sijiName != '' and params.sijiName != null and params.sijiName != 'null' ">
+                and siji.siji_name like CONCAT('%',#{params.sijiName},'%')
+            </if>
+            <if test=" params.sijiPhone != '' and params.sijiPhone != null and params.sijiPhone != 'null' ">
+                and siji.siji_phone like CONCAT('%',#{params.sijiPhone},'%')
+            </if>
+            <if test=" params.sijiIdNumber != '' and params.sijiIdNumber != null and params.sijiIdNumber != 'null' ">
+                and siji.siji_id_number like CONCAT('%',#{params.sijiIdNumber},'%')
+            </if>
+            <if test="params.sexTypes != null  and params.sexTypes != ''">
+                and siji.sex_types = #{params.sexTypes}
+            </if>
+
+            <if test=" params.sijiEmail != '' and params.sijiEmail != null and params.sijiEmail != 'null' ">
+                and siji.siji_email like CONCAT('%',#{params.sijiEmail},'%')
+            </if>
+                <!-- 判断用户的id不为空 -->
+            <if test=" params.yonghuIdNotNull != '' and params.yonghuIdNotNull != null and params.yonghuIdNotNull != 'null' ">
+                and a.yonghu_id IS NOT NULL
+            </if>
+            <if test=" params.yonghuUuidNumber != '' and params.yonghuUuidNumber != null and params.yonghuUuidNumber != 'null' ">
+                and yonghu.yonghu_uuid_number like CONCAT('%',#{params.yonghuUuidNumber},'%')
+            </if>
+            <if test=" params.yonghuName != '' and params.yonghuName != null and params.yonghuName != 'null' ">
+                and yonghu.yonghu_name like CONCAT('%',#{params.yonghuName},'%')
+            </if>
+            <if test=" params.yonghuPhone != '' and params.yonghuPhone != null and params.yonghuPhone != 'null' ">
+                and yonghu.yonghu_phone like CONCAT('%',#{params.yonghuPhone},'%')
+            </if>
+            <if test=" params.yonghuIdNumber != '' and params.yonghuIdNumber != null and params.yonghuIdNumber != 'null' ">
+                and yonghu.yonghu_id_number like CONCAT('%',#{params.yonghuIdNumber},'%')
+            </if>
+            <if test="params.newMoneyStart != null ">
+                <![CDATA[  and yonghu.new_money >= #{params.newMoneyStart}   ]]>
+            </if>
+            <if test="params.newMoneyEnd != null ">
+                <![CDATA[  and yonghu.new_money <= #{params.newMoneyEnd}   ]]>
+            </if>
+            <if test="params.newMoney != null and params.newMoney != ''">
+                and a.new_money = #{params.newMoney}
+            </if>
+            <if test=" params.yonghuEmail != '' and params.yonghuEmail != null and params.yonghuEmail != 'null' ">
+                and yonghu.yonghu_email like CONCAT('%',#{params.yonghuEmail},'%')
+            </if>
+        </where>
+        order by a.${params.sort} ${params.order}
+    </select>
+
+</mapper>

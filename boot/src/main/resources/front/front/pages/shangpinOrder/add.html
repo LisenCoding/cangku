@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>商品订单添加</title>
+    <!-- bootstrap样式，地图插件使用 -->
+    <link rel="stylesheet" href="../../css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../../layui/css/layui.css">
+    <!-- 样式 -->
+    <link rel="stylesheet" href="../../css/style.css" />
+    <!-- 主题（主要颜色设置） -->
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <!-- 通用的css -->
+    <link rel="stylesheet" href="../../css/common.css" />
+</head>
+<style>
+    html::after {
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        content: '';
+        display: block;
+        background-attachment: fixed;
+        background-size: cover;
+        background-position: center;
+        z-index: -1;
+    }
+    #swiper {
+        overflow: hidden;
+        margin: 0 auto;
+    }
+    #swiper .layui-carousel-ind li {
+        width: 20px;
+        height: 10px;
+        border-width: 0;
+        border-style: solid;
+        border-color: dodgerblue;
+        border-radius: 6px;
+        background-color: #f7f7f7;
+        box-shadow: 0 0 6px rgba(255,0,0,.8);
+    }
+    #swiper .layui-carousel-ind li.layui-this {
+        width: 30px;
+        height: 10px;
+        border-width: 0;
+        border-style: solid;
+        border-color: dodgerblue;
+        border-radius: 6px;
+    }
+
+    button, button:focus {
+        outline: none;
+    }
+
+    .data-add-container .add .layui-select-title .layui-unselect {
+        padding: 0 12px;
+        height: 40px;
+        font-size: 15px;
+        border-radius: 4px;
+        border-width: 1px;
+        border-style: solid;
+        text-align: center;
+    }
+    .data-add-container .add .layui-form-item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .data-add-container .layui-form-pane .layui-form-item[pane] .layui-form-label {
+        margin: 0;
+        position: inherit;
+        background: transparent;
+        border: 0;
+    }
+    .data-add-container .add .layui-input-block {
+        margin: 0;
+        flex: 1;
+    }
+    .data-add-container .layui-form-pane .layui-form-item[pane] .layui-input-inline {
+        margin: 0;
+        flex: 1;
+        display: flex;
+    }
+</style>
+<body style="background: #fff; ">
+    <div id="app">
+        <div class="data-add-container  sub_borderColor" :style='{"padding":"20px","margin":"30px auto","backgroundColor":"rgba(255, 255, 255, 0)","borderRadius":"10px","borderWidth":"1px","borderStyle":"solid"}'>
+
+            <form class="layui-form layui-form-pane add" lay-filter="myForm">
+                <div class="layui-form-item main_borderColor" :style='{"padding":"10px","boxShadow":"0 0 0px rgba(255,0,0,.8)","margin":"0 0 10px 0","backgroundColor":"rgba(255, 255, 255, 0)","borderRadius":"1px","borderWidth":"0 0 1px 0","borderStyle":"solid"}'>
+                    <label  :style='{"width":"auto","borderColor": "rgba(255, 255, 255, 0)","padding":"0 12px 0 0","backgroundColor":"rgba(255, 255, 255, 0)","fontSize":"15px","color":"#333","textAlign":"left"}' class="layui-form-label">
+                        商品名称：
+                    </label>
+                    <div class="layui-input-block">
+                        <input class="layui-input main_borderColor" :style='{"padding":"0 12px","boxShadow":"0 0 0px rgba(160, 67, 26, 1)","backgroundColor":"#fff","color":"rgba(135, 206, 250, 1)","borderRadius":"4px","textAlign":"left","borderWidth":"1px","fontSize":"15px","borderStyle":"solid","height":"40px"}'
+                            v-model="shangpin.shangpinName" type="text" autocomplete="off"  readonly="readonly">
+                    </div>
+                </div>
+                <div class="layui-form-item main_borderColor" :style='{"padding":"10px","boxShadow":"0 0 0px rgba(255,0,0,.8)","margin":"0 0 10px 0","backgroundColor":"rgba(255, 255, 255, 0)","borderRadius":"1px","borderWidth":"0 0 1px 0","borderStyle":"solid"}'>
+                    <label  :style='{"width":"auto","borderColor": "rgba(255, 255, 255, 0)","padding":"0 12px 0 0","backgroundColor":"rgba(255, 255, 255, 0)","fontSize":"15px","color":"#333","textAlign":"left"}' class="layui-form-label">
+                        商品编号：
+                    </label>
+                    <div class="layui-input-block">
+                        <input class="layui-input main_borderColor" :style='{"padding":"0 12px","boxShadow":"0 0 0px rgba(160, 67, 26, 1)","backgroundColor":"#fff","color":"rgba(135, 206, 250, 1)","borderRadius":"4px","textAlign":"left","borderWidth":"1px","fontSize":"15px","borderStyle":"solid","height":"40px"}'
+                            v-model="shangpin.shangpinUuidNumber" type="text" autocomplete="off"  readonly="readonly">
+                    </div>
+                </div>
+                <div v-if="shangpin.shangpinPhoto" class="layui-form-item main_borderColor" :style='{"padding":"10px","boxShadow":"0 0 0px rgba(255,0,0,.8)","margin":"0 0 10px 0","backgroundColor":"rgba(255, 255, 255, 0)","borderRadius":"1px","borderWidth":"0 0 1px 0","borderStyle":"solid"}'>
+                    <label  :style='{"width":"auto","borderColor": "rgba(255, 255, 255, 0)","padding":"0 12px 0 0","backgroundColor":"rgba(255, 255, 255, 0)","fontSize":"15px","color":"#333","textAlign":"left"}' class="layui-form-label">图片：</label>
+                    <div class="layui-input-block">
+                        <div style="display:inline-block;margin-right:10px;">
+                            <img id="shangpinPhotoImg" style="width: 100px;height: 100px;border-radius: 50%;border: 2px solid #EEEEEE;"
+                                 :src="baseUrl+shangpin.shangpinPhoto">
+                            <input type="hidden" :value="detail.shangpinPhoto" id="shangpinPhoto" name="shangpinPhoto" />
+                        </div>
+                    </div>
+                </div>
+                            <div class="layui-form-item main_borderColor" :style='{"padding":"10px","boxShadow":"0 0 0px rgba(255,0,0,.8)","margin":"0 0 10px 0","backgroundColor":"rgba(255, 255, 255, 0)","borderRadius":"1px","borderWidth":"0 0 1px 0","borderStyle":"solid"}'>
+                    <label  :style='{"width":"auto","borderColor": "rgba(255, 255, 255, 0)","padding":"0 12px 0 0","backgroundColor":"rgba(255, 255, 255, 0)","fontSize":"15px","color":"#333","textAlign":"left"}'
+                            class="layui-form-label">商品库存：</label>
+                    <div class="layui-input-block">
+                        <input class="layui-input main_borderColor" :style='{"padding":"0 12px","boxShadow":"0 0 0px rgba(160, 67, 26, 1)","backgroundColor":"#fff","color":"rgba(135, 206, 250, 1)","borderRadius":"4px","textAlign":"left","borderWidth":"1px","fontSize":"15px","borderStyle":"solid","height":"40px"}'
+                           v-model="shangpin.shangpinKucunNumber" type="text" autocomplete="off" readonly="readonly">
+                    </div>
+                </div>
+                <!-- 级联表 收货地址 -->
+                <!--<div class="layui-form-item main_borderColor" :style='{"padding":"10px","boxShadow":"0 0 0px rgba(255,0,0,.8)","margin":"0 0 10px 0","backgroundColor":"rgba(255, 255, 255, 0)","borderRadius":"1px","borderWidth":"0 0 1px 0","borderStyle":"solid"}'>
+                    <label  :style='{"width":"auto","borderColor": "rgba(255, 255, 255, 0)","padding":"0 12px 0 0","backgroundColor":"rgba(255, 255, 255, 0)","fontSize":"15px","color":"#333","textAlign":"left"}' class="layui-form-label">
+                        收货地址：
+                    </label>
+                    <div class="layui-input-block">
+                        <select name="addressId" id="addressId" lay-filter="addressId">
+                            <option v-for="(item,index) in addressList" v-bind:key="index" :value="item.id" :selected="detail.addressId == item.id?true:false" :key="item.id">{{ item.addressName }}</option>
+                        </select>
+                    </div>
+                </div>-->
+                <!-- 级联表 商品 -->
+                <!--<div class="layui-form-item main_borderColor" :style='{"padding":"10px","boxShadow":"0 0 0px rgba(255,0,0,.8)","margin":"0 0 10px 0","backgroundColor":"rgba(255, 255, 255, 0)","borderRadius":"1px","borderWidth":"0 0 1px 0","borderStyle":"solid"}'>
+                    <label  :style='{"width":"auto","borderColor": "rgba(255, 255, 255, 0)","padding":"0 12px 0 0","backgroundColor":"rgba(255, 255, 255, 0)","fontSize":"15px","color":"#333","textAlign":"left"}' class="layui-form-label">
+                        商品：
+                    </label>
+                    <div class="layui-input-block">
+                        <select name="shangpinId" id="shangpinId" lay-filter="shangpinId">
+                            <option v-for="(item,index) in shangpinList" v-bind:key="index" :value="item.id" :selected="detail.shangpinId == item.id?true:false" :key="item.id">{{ item.shangpinName }}</option>
+                        </select>
+                    </div>
+                </div>-->
+                <!-- 级联表 车辆 -->
+                <!--<div class="layui-form-item main_borderColor" :style='{"padding":"10px","boxShadow":"0 0 0px rgba(255,0,0,.8)","margin":"0 0 10px 0","backgroundColor":"rgba(255, 255, 255, 0)","borderRadius":"1px","borderWidth":"0 0 1px 0","borderStyle":"solid"}'>
+                    <label  :style='{"width":"auto","borderColor": "rgba(255, 255, 255, 0)","padding":"0 12px 0 0","backgroundColor":"rgba(255, 255, 255, 0)","fontSize":"15px","color":"#333","textAlign":"left"}' class="layui-form-label">
+                        车辆：
+                    </label>
+                    <div class="layui-input-block">
+                        <select name="cheliangId" id="cheliangId" lay-filter="cheliangId">
+                            <option v-for="(item,index) in cheliangList" v-bind:key="index" :value="item.id" :selected="detail.cheliangId == item.id?true:false" :key="item.id">{{ item.cheliangName }}</option>
+                        </select>
+                    </div>
+                </div>-->
+                <!-- 级联表 司机 -->
+                <!--<div class="layui-form-item main_borderColor" :style='{"padding":"10px","boxShadow":"0 0 0px rgba(255,0,0,.8)","margin":"0 0 10px 0","backgroundColor":"rgba(255, 255, 255, 0)","borderRadius":"1px","borderWidth":"0 0 1px 0","borderStyle":"solid"}'>
+                    <label  :style='{"width":"auto","borderColor": "rgba(255, 255, 255, 0)","padding":"0 12px 0 0","backgroundColor":"rgba(255, 255, 255, 0)","fontSize":"15px","color":"#333","textAlign":"left"}' class="layui-form-label">
+                        司机：
+                    </label>
+                    <div class="layui-input-block">
+                        <select name="sijiId" id="sijiId" lay-filter="sijiId">
+                            <option v-for="(item,index) in sijiList" v-bind:key="index" :value="item.id" :selected="detail.sijiId == item.id?true:false" :key="item.id">{{ item.sijiName }}</option>
+                        </select>
+                    </div>
+                </div>-->
+                <!-- 级联表 用户 -->
+                <!--<div class="layui-form-item main_borderColor" :style='{"padding":"10px","boxShadow":"0 0 0px rgba(255,0,0,.8)","margin":"0 0 10px 0","backgroundColor":"rgba(255, 255, 255, 0)","borderRadius":"1px","borderWidth":"0 0 1px 0","borderStyle":"solid"}'>
+                    <label  :style='{"width":"auto","borderColor": "rgba(255, 255, 255, 0)","padding":"0 12px 0 0","backgroundColor":"rgba(255, 255, 255, 0)","fontSize":"15px","color":"#333","textAlign":"left"}' class="layui-form-label">
+                        用户：
+                    </label>
+                    <div class="layui-input-block">
+                        <select name="yonghuId" id="yonghuId" lay-filter="yonghuId">
+                            <option v-for="(item,index) in yonghuList" v-bind:key="index" :value="item.id" :selected="detail.yonghuId == item.id?true:false" :key="item.id">{{ item.yonghuName }}</option>
+                        </select>
+                    </div>
+                </div>-->
+    <!-- 当前表的 -->
+<!-- 唯一uuid -->
+                <div class="layui-form-item main_borderColor" :style='{"padding":"10px","boxShadow":"0 0 0px rgba(255,0,0,.8)","margin":"0 0 10px 0","backgroundColor":"rgba(255, 255, 255, 0)","borderRadius":"1px","borderWidth":"0 0 1px 0","borderStyle":"solid"}'>
+                    <label  :style='{"width":"auto","borderColor": "rgba(255, 255, 255, 0)","padding":"0 12px 0 0","backgroundColor":"rgba(255, 255, 255, 0)","fontSize":"15px","color":"#333","textAlign":"left"}' class="layui-form-label">
+                        订单编号：
+                    </label>
+                    <div class="layui-input-block">
+                        <input class="layui-input main_borderColor" :style='{"padding":"0 12px","boxShadow":"0 0 0px rgba(160, 67, 26, 1)","backgroundColor":"#fff","color":"rgba(135, 206, 250, 1)","borderRadius":"4px","textAlign":"left","borderWidth":"1px","fontSize":"15px","borderStyle":"solid","height":"40px"}'
+                               v-model="detail.shangpinOrderUuidNumber" lay-verify="required" type="text" :readonly="ro.shangpinOrderUuidNumber" name="shangpinOrderUuidNumber" id="shangpinOrderUuidNumber" autocomplete="off">
+                    </div>
+                </div>
+                <!-- 级联表的表id -->
+                <input type="hidden" :value="detail.addressId" id="addressId" name="addressId"/>
+                <!-- 级联表的表id -->
+                <input type="hidden" :value="detail.shangpinId" id="shangpinId" name="shangpinId"/>
+                <!-- 级联表的表id -->
+                <input type="hidden" :value="detail.cheliangId" id="cheliangId" name="cheliangId"/>
+                <!-- 级联表的表id -->
+                <input type="hidden" :value="detail.sijiId" id="sijiId" name="sijiId"/>
+                <!-- 级联表的表id -->
+                <input type="hidden" :value="detail.yonghuId" id="yonghuId" name="yonghuId"/>
+                <div class="layui-form-item main_borderColor" :style='{"padding":"10px","boxShadow":"0 0 0px rgba(255,0,0,.8)","margin":"0 0 10px 0","backgroundColor":"rgba(255, 255, 255, 0)","borderRadius":"1px","borderWidth":"0 0 1px 0","borderStyle":"solid"}'>
+                    <label  :style='{"width":"auto","borderColor": "rgba(255, 255, 255, 0)","padding":"0 12px 0 0","backgroundColor":"rgba(255, 255, 255, 0)","fontSize":"15px","color":"#333","textAlign":"left"}' class="layui-form-label">
+                        购买数量：
+                    </label>
+                    <div class="layui-input-block">
+                        <input class="layui-input main_borderColor" :style='{"padding":"0 12px","boxShadow":"0 0 0px rgba(160, 67, 26, 1)","backgroundColor":"#fff","color":"rgba(135, 206, 250, 1)","borderRadius":"4px","textAlign":"left","borderWidth":"1px","fontSize":"15px","borderStyle":"solid","height":"40px"}'
+                           v-model="detail.buyNumber" lay-verify="integer|required" type="text" :readonly="ro.buyNumber" name="buyNumber" id="buyNumber" autocomplete="off">
+                    </div>
+                </div>
+                <div class="btn-container">
+                    <span style="font-size: 18px;font-weight: bold;color: #ce0b07;margin-right: 20px;">
+                        总价：{{(shangpin.shangpinNewMoney * detail.buyNumber).toFixed(2) }}RMB
+                    </span>
+                    <button lay-filter="thisSubmit" lay-submit type="button" class="layui-btn layui-btn-lg btn-theme">
+                        <i class="layui-icon">&#xe657;</i> 提交
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <script src="../../layui/layui.js"></script>
+    <script src="../../js/vue.js"></script>
+    <!-- 引入element组件库 -->
+    <script src="../../xznstatic/js/element.min.js"></script>
+    <!-- 引入element样式 -->
+    <link rel="stylesheet" href="../../xznstatic/css/element.min.css">
+    <!-- 组件配置信息 -->
+    <script src="../../js/config.js"></script>
+    <!-- 扩展插件配置信息 -->
+    <script src="../../modules/config.js"></script>
+    <!-- 工具方法 -->
+    <script src="../../js/utils.js"></script>
+    <!-- 校验格式工具类 -->
+    <script src="../../js/validate.js"></script>
+    <!-- 地图 -->
+    <script type="text/javascript" src="../../js/jquery.js"></script>
+    <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=ca04cee7ac952691aa67a131e6f0cee0"></script>
+    <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../js/bootstrap.AMapPositionPicker.js"></script>
+
+    <script>
+        var jquery = $;
+
+        var vue = new Vue({
+            el: '#app',
+            data: {
+                //项目路径
+                baseUrl:"",
+                dataList: [],
+                ro:{
+                    shangpinOrderUuidNumber: true,
+                    addressId: false,
+                    shangpinId: false,
+                    cheliangId: false,
+                    sijiId: false,
+                    yonghuId: false,
+                    buyNumber: true,
+                    shangpinOrderTruePrice: false,
+                    shangpinOrderTypes: false,
+                    insertTime: false,
+                    createTime: false,
+                },
+                detail: {
+                    shangpinOrderUuidNumber: new Date().getTime(),//数字
+                    addressId: '',
+                    shangpinId: '',
+                    cheliangId: '',
+                    sijiId: '',
+                    yonghuId: '',
+                    buyNumber: '',
+                    shangpinOrderTruePrice: '',
+                    shangpinOrderTypes: '',//数字
+                    shangpinOrderValue: '',//数字对应的值
+                    insertTime: '',
+                    createTime: '',
+                },
+                addressList:[],//级联表列表 收货地址
+                address: {},//级联表单个 收货地址
+                shangpinList:[],//级联表列表 商品
+                shangpin: {},//级联表单个 商品
+                cheliangList:[],//级联表列表 车辆
+                cheliang: {},//级联表单个 车辆
+                sijiList:[],//级联表列表 司机
+                siji: {},//级联表单个 司机
+                yonghuList:[],//级联表列表 用户
+                yonghu: {},//级联表单个 用户
+
+                // 下拉框
+                shangpinOrderTypesList: [],
+
+                centerMenu: centerMenu
+            },
+            updated: function() {
+                layui.form.render('select', 'myForm');
+            },
+            computed: {
+            },
+            methods: {
+                jump(url) {
+                    jump(url)
+                }
+            }
+        })
+
+
+        layui.use(['layer', 'element', 'carousel', 'http', 'jquery', 'form', 'upload', 'laydate','tinymce'], function() {
+            var layer = layui.layer;
+            var element = layui.element;
+            var carousel = layui.carousel;
+            var http = layui.http;
+            var jquery = layui.jquery;
+            var form = layui.form;
+            var upload = layui.upload;
+            var laydate = layui.laydate;
+            var tinymce = layui.tinymce;
+            vue.baseUrl = http.baseurl
+
+            localStorage.setItem("goUtl","./pages/shangpinOrder/list.html")
+
+            //var addressId = http.getParam('addressId');
+            let addressId = localStorage.getItem("addressId")
+            if(addressId != null && addressId != ""){
+                //单个 收货地址查询
+                initializationAddress(addressId);
+            }
+            //列表 收货地址查询
+            initializationAddressList();
+            //var shangpinId = http.getParam('shangpinId');
+            let shangpinId = localStorage.getItem("shangpinId")
+            if(shangpinId != null && shangpinId != ""){
+                //单个 商品查询
+                initializationShangpin(shangpinId);
+            }
+            //列表 商品查询
+            initializationShangpinList();
+            //var cheliangId = http.getParam('cheliangId');
+            let cheliangId = localStorage.getItem("cheliangId")
+            if(cheliangId != null && cheliangId != ""){
+                //单个 车辆查询
+                initializationCheliang(cheliangId);
+            }
+            //列表 车辆查询
+            initializationCheliangList();
+            //var sijiId = http.getParam('sijiId');
+            let sijiId = localStorage.getItem("sijiId")
+            if(sijiId != null && sijiId != ""){
+                //单个 司机查询
+                initializationSiji(sijiId);
+            }
+            //列表 司机查询
+            initializationSijiList();
+            //var yonghuId = http.getParam('yonghuId');
+            let yonghuId = localStorage.getItem("yonghuId")
+            if(yonghuId != null && yonghuId != ""){
+                //单个 用户查询
+                initializationYonghu(yonghuId);
+            }
+            //列表 用户查询
+            initializationYonghuList();
+            // 下拉框
+            // 订单类型的查询和初始化
+            shangpinOrderTypesSelect();
+
+           // 上传文件
+            // 日期效验规则及格式
+            dateTimePick();
+            // 表单效验规则
+            form.verify({
+                // 正整数效验规则
+                integer: [
+                    /^[1-9][0-9]*$/
+                    ,'必须是正整数'
+                ]
+                // 小数效验规则
+                ,double: [
+                    /^[1-9][0-9]{0,5}(\.[0-9]{1,2})?$/
+                    ,'最大整数位为6为,小数最大两位'
+                ]
+            });
+
+            // session独取
+            let table = localStorage.getItem("userTable");
+            http.request(table+"/session", 'get', {}, function (data) {
+                // 表单赋值
+                //form.val("myForm", data.data);
+                // data = data.data;
+                for (var key in data) {
+                    vue.detail[table+"Id"] = data.id
+                }
+            });
+
+            //修改
+            if(http.getParam('shangpinOrderId')){
+                http.request(`shangpinOrder/info/${http.getParam('shangpinOrderId')}`, 'get', {}, function(data) {
+                    vue.detail = data.data
+                    jquery("#insertTime").val(vue.detail.insertTime)
+                    jquery("#createTime").val(vue.detail.createTime)
+                });
+            }
+
+            // 提交
+            form.on('submit(thisSubmit)', function (data) {
+                data = data.field;
+                    data["yonghuId"]= localStorage.getItem("userid");
+                if(http.getParam('shangpinOrderId')){
+                    data["id"]= http.getParam('shangpinOrderId')
+                }
+                // 提交数据
+                http.requestJson(`shangpinOrder/${http.getParam("shangpinOrderId")?"update":"add"}`, 'post', data, function (res) {
+                    if(res.code == 0){
+                        layer.msg('提交成功', {
+                            time: 2000,
+                            icon: 6
+                        }, function () {
+                            vue.jump("../shangpinOrder/list.html");
+                                http.remove('shangpinOrderId')
+                            // back();
+                        });
+                    }else{
+                        layer.msg(res.msg, {time: 5000,icon: 5});
+                    }
+                });
+                return false
+            });
+
+        });
+        // 日期框初始化
+        function dateTimePick(){
+            var myDate = new Date();  //获取当前时间
+            /*
+                ,change: function(value, date, endDate){
+                    value       得到日期生成的值，如：2017-08-18
+                    date        得到日期时间对象：{year: 2017, month: 8, date: 18, hours: 0, minutes: 0, seconds: 0}
+                    endDate     得结束的日期时间对象，开启范围选择（range: true）才会返回。对象成员同上。
+            */
+        }
+
+
+
+
+       // 订单类型的查询
+       function shangpinOrderTypesSelect() {
+           //填充下拉框选项
+           layui.http.request("dictionary/page?page=1&limit=100&sort=&order=&dicCode=shangpin_order_types", "GET", {}, (res) => {
+               if(res.code == 0){
+                   vue.shangpinOrderTypesList = res.data.list;
+               }
+           });
+       }
+
+
+
+        //单个 收货地址查询
+        function initializationAddress(id){
+            layui.http.request("address/detail/" + id, 'get', {}, function (res) {
+                if(res.code ==0){
+                    vue.address = res.data;
+                    vue.detail.addressId=vue.address.id//赋值给detail
+                }
+            });
+        }
+        //列表 收货地址查询
+        function initializationAddressList(){
+            layui.http.request("address/page?page=1&limit=100&sort=&order=", 'get', {}, function (res) {
+                if(res.code ==0){
+                    vue.addressList = res.data.list;
+                }
+            });
+        }
+        //单个 商品查询
+        function initializationShangpin(id){
+            layui.http.request("shangpin/detail/" + id, 'get', {}, function (res) {
+                if(res.code ==0){
+                    vue.shangpin = res.data;
+                    vue.detail.shangpinId=vue.shangpin.id//赋值给detail
+                }
+            });
+        }
+        //列表 商品查询
+        function initializationShangpinList(){
+            layui.http.request("shangpin/page?page=1&limit=100&sort=&order=", 'get', {}, function (res) {
+                if(res.code ==0){
+                    vue.shangpinList = res.data.list;
+                }
+            });
+        }
+        //单个 车辆查询
+        function initializationCheliang(id){
+            layui.http.request("cheliang/detail/" + id, 'get', {}, function (res) {
+                if(res.code ==0){
+                    vue.cheliang = res.data;
+                    vue.detail.cheliangId=vue.cheliang.id//赋值给detail
+                }
+            });
+        }
+        //列表 车辆查询
+        function initializationCheliangList(){
+            layui.http.request("cheliang/page?page=1&limit=100&sort=&order=", 'get', {}, function (res) {
+                if(res.code ==0){
+                    vue.cheliangList = res.data.list;
+                }
+            });
+        }
+        //单个 司机查询
+        function initializationSiji(id){
+            layui.http.request("siji/detail/" + id, 'get', {}, function (res) {
+                if(res.code ==0){
+                    vue.siji = res.data;
+                    vue.detail.sijiId=vue.siji.id//赋值给detail
+                }
+            });
+        }
+        //列表 司机查询
+        function initializationSijiList(){
+            layui.http.request("siji/page?page=1&limit=100&sort=&order=", 'get', {}, function (res) {
+                if(res.code ==0){
+                    vue.sijiList = res.data.list;
+                }
+            });
+        }
+        //单个 用户查询
+        function initializationYonghu(id){
+            layui.http.request("yonghu/detail/" + id, 'get', {}, function (res) {
+                if(res.code ==0){
+                    vue.yonghu = res.data;
+                    vue.detail.yonghuId=vue.yonghu.id//赋值给detail
+                }
+            });
+        }
+        //列表 用户查询
+        function initializationYonghuList(){
+            layui.http.request("yonghu/page?page=1&limit=100&sort=&order=", 'get', {}, function (res) {
+                if(res.code ==0){
+                    vue.yonghuList = res.data.list;
+                }
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.CheliangDao">
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        a.id as id
+        ,a.cheliang_name as cheliangName
+        ,a.cheliang_uuid_number as cheliangUuidNumber
+        ,a.cheliang_photo as cheliangPhoto
+        ,a.cheliang_paizhao as cheliangPaizhao
+        ,a.cheliang_types as cheliangTypes
+        ,a.cheliang_content as cheliangContent
+        ,a.cheliang_delete as cheliangDelete
+        ,a.insert_time as insertTime
+        ,a.create_time as createTime
+    </sql>
+    <select id="selectListView" parameterType="map" resultType="com.entity.view.CheliangView" >
+        SELECT
+        <include refid="Base_Column_List" />
+        <!-- 级联表的字段 -->
+
+        FROM cheliang  a
+
+        <where>
+            <if test="params.ids != null">
+                and a.id in
+                <foreach item="item" index="index" collection="params.ids" open="(" separator="," close=")">
+                #{item}
+                </foreach>
+            </if>
+            <if test=" params.cheliangName != '' and params.cheliangName != null and params.cheliangName != 'null' ">
+                and a.cheliang_name like CONCAT('%',#{params.cheliangName},'%')
+            </if>
+            <if test=" params.cheliangUuidNumber != '' and params.cheliangUuidNumber != null and params.cheliangUuidNumber != 'null' ">
+                and a.cheliang_uuid_number like CONCAT('%',#{params.cheliangUuidNumber},'%')
+            </if>
+            <if test=" params.cheliangPaizhao != '' and params.cheliangPaizhao != null and params.cheliangPaizhao != 'null' ">
+                and a.cheliang_paizhao like CONCAT('%',#{params.cheliangPaizhao},'%')
+            </if>
+            <if test="params.cheliangTypes != null and params.cheliangTypes != ''">
+                and a.cheliang_types = #{params.cheliangTypes}
+            </if>
+            <if test=" params.cheliangContent != '' and params.cheliangContent != null and params.cheliangContent != 'null' ">
+                and a.cheliang_content like CONCAT('%',#{params.cheliangContent},'%')
+            </if>
+            <if test="params.cheliangDeleteStart != null and params.cheliangDeleteStart != ''">
+                <![CDATA[  and a.cheliang_delete >= #{params.cheliangDeleteStart}   ]]>
+            </if>
+            <if test="params.cheliangDeleteEnd != null and params.cheliangDeleteEnd != ''">
+                <![CDATA[  and a.cheliang_delete <= #{params.cheliangDeleteEnd}   ]]>
+            </if>
+             <if test="params.cheliangDelete != null and params.cheliangDelete != ''">
+                and a.cheliang_delete = #{params.cheliangDelete}
+             </if>
+            <if test=" params.insertTimeStart != '' and params.insertTimeStart != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(a.insert_time) >= UNIX_TIMESTAMP(#{params.insertTimeStart}) ]]>
+            </if>
+            <if test=" params.insertTimeEnd != '' and params.insertTimeEnd != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(a.insert_time) <= UNIX_TIMESTAMP(#{params.insertTimeEnd}) ]]>
+            </if>
+            <if test="params.insertTime != null and params.insertTime != ''">
+                and a.insert_time = #{params.insertTime}
+            </if>
+
+        </where>
+        order by a.${params.sort} ${params.order}
+    </select>
+
+</mapper>

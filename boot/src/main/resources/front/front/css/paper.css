@@ -1,0 +1,1570 @@
+﻿
+ul, li {
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+.papermain {
+    display: none;
+}
+
+.content-bgcolor {
+    background: #f6f6f6;
+}
+
+.worklist {
+    min-height: 400px;
+}
+
+    .worklist .coursename {
+        background: url(../images/study/icon_Navigation.png) no-repeat left 4px;
+        padding-left: 30px;
+        height: 36px;
+        border-bottom: 1px solid #ddd;
+        font-size: 16px;
+    }
+
+        .worklist .coursename .l {
+            width: 50%;
+            float: left;
+            display: inline;
+        }
+
+        .worklist .coursename .r {
+            width: 50%;
+            float: left;
+            display: inline;
+        }
+
+.coursename .search-work {
+    width: 227px;
+    height: 30px;
+    border: 1px solid #c9c9c9;
+    float: right;
+    display: inline;
+    margin-top: -7px;
+}
+
+    .coursename .search-work .btn-search {
+        background: url(../images/study/study-manage-icon.png) no-repeat -52px -45px;
+        width: 28px;
+        height: 30px;
+        border: 0px;
+        cursor: pointer;
+        float: left;
+    }
+
+    .coursename .search-work .input-default {
+        width: 85%;
+        padding: 7px 5px 3px;
+        border: 0px;
+        height: 17px;
+        float: left;
+    }
+
+.worklist .workblock {
+    width: 100%;
+    background: #f1f9fb;
+    border: 1px solid #b9e0db;
+    margin-top: 26px;
+}
+
+    .worklist .workblock .l, .worklist .workblock .r {
+        padding: 25px 0px;
+        float: left;
+        display: inline;
+    }
+
+    .worklist .workblock .l {
+        width: 80%;
+    }
+
+.workblock .l h3 {
+    font-weight: normal;
+    padding-left: 16px;
+    color: #4a5050;
+}
+
+.workblock .workinfo {
+    font-size: 12px;
+    padding-top: 20px;
+    padding-left: 16px;
+}
+
+.worklist .workblock .r {
+    width: 20%;
+}
+
+.workblock .r .dojob {
+    width: 109px;
+    margin-top: 8px;
+    background: #fd833a;
+    padding: 8px 0px;
+    border: 1px solid #d7671f;
+    border-radius: 3px;
+    color: #fff;
+    cursor: pointer;
+    float: right;
+    margin-right: 20px;
+    text-align: center;
+}
+
+.workblock .r .viewjob {
+    background: #eee;
+    padding: 8px 0px;
+    border: 1px solid #c9c9c9;
+    border-radius: 3px;
+    cursor: pointer;
+    color: #333;
+    width: 109px;
+    display: inline-block;
+    text-align: center;
+    margin-top: 8px;
+    float: right;
+    margin-right: 20px;
+}
+
+/*.clear {
+    clear: both;
+}*/
+.clear:after {
+    clear: both;
+    content:'';
+    display:block;
+}
+
+input, button, select, textarea {
+    outline: none;
+}
+
+.marginr30 {
+    margin-right: 30px;
+}
+
+.worktitle {
+    font-size: 22px;
+    color: #313131;
+    line-height: 75px;
+    padding-top: 14px;
+    position: relative;
+}
+
+.simulation {
+    width: 53px;
+    height: 35px;
+    position: absolute;
+    left: 169px;
+    top: 10px;
+    line-height: 25px;
+    background: url(../work_image/simulation.png) no-repeat;
+    font-size: 15px;
+    text-align: center;
+}
+
+.countdown {
+    float: right;
+    width: 211px;
+    height: 49px;
+    border: 1px solid #d3d3d3;
+    border-radius: 5px;
+    background: #fff;
+    line-height: 45px;
+    margin-top: -18px;
+    text-align: center;
+    font-size: 20px;
+    margin-right: 62px;
+}
+
+.hm_btn_orange {
+    background: #63C058;
+    cursor: pointer;
+    width: 200px;
+    height: 50px;
+    border: none;
+    border-radius: 28px;
+    font-size: 20px;
+}
+
+    .hm_btn_orange:hover {
+        background: #1ccca9;
+    }
+
+.submitwrok, .submitwrok:hover {
+    background: #63C058;
+}
+
+#submitwork {
+    background: #63C058;
+}
+
+.score {
+    color: #7D7D7D;
+    line-height: 32px;
+    margin-bottom: 23px;
+}
+
+.workontop-right {
+    font-size: 18px;
+    margin-top: 49px;
+}
+
+.stunews-right {
+    font-size: 15px;
+    margin-top: 20px;
+}
+
+.stu-head-img {
+    height: 90px;
+    text-align: right;
+    width: 80px;
+}
+
+.stu-img-div {
+    float: left;
+    width: 30%;
+    padding-left: 15px;
+}
+
+.stu-news-div {
+    float: left;
+    width: 69%;
+    padding-left: 15px;
+}
+
+.worktextarea {
+    width: 450px;
+    height: 100px;
+}
+
+.showanswer {
+    width: 100%;
+    max-height: 130px;
+    background: #ebebe4;
+    border: 1px solid #a9a9a9;
+    padding: 15px 5px;
+    overflow-y: auto;
+}
+
+.videomodel {
+    cursor: pointer;
+}
+
+.f35 {
+    font-size: 35px;
+    font-style: normal;
+}
+
+.blue {
+    color: #269CCC;
+}
+
+.col-orange {
+    color: #fc5c1d;
+}
+
+.row {
+    position: relative;
+}
+
+.orange {
+    color: #FC711E;
+    display: none;
+}
+
+.previewing {
+    display: none;
+}
+
+.grey {
+    color: #757575;
+}
+
+.mr30 {
+    margin-right: 30px;
+}
+
+.user-config-left {
+    background: none;
+}
+
+    .user-config-left > .left-content {
+        padding: 0;
+    }
+
+.quesnum {
+    font-size: 14px;
+    color: #747474;
+    margin-left: 48px;
+}
+
+.flodbigquestion {
+    float: right;
+    margin-right: 19px;
+    font-size: 14px;
+    /*background: url(images/course/course-manage-icon.png) -82px -500px no-repeat;*/
+    padding-right: 15px;
+    cursor: pointer;
+    color: #dd621f;
+}
+
+    .flodbigquestion i {
+        background: url(../images/course/course-manage-icon.png) -74px -493px no-repeat;
+        width: 21px;
+        height: 38px;
+        display: inline-block;
+    }
+
+    .flodbigquestion.closeques i {
+        background: url(../images/course/course-manage-icon.png) -179px -446px no-repeat;
+    }
+
+.question-type {
+    line-height: 62px;
+    background: #F9F9F9;
+    padding-left: 34px;
+    color: #404040;
+    font-size: 16px;
+    border-bottom: 1px solid #d9d9d9;
+}
+
+.question-cont {
+    padding: 25px 18px 25px 30px;
+    position: relative;
+}
+
+.question-cont-video {
+    padding: 10px 0 0;
+    position: relative;
+}
+
+.question-cont-left {
+    width: 54px;
+    float: left;
+    text-align: center;
+    position: relative;
+}
+
+.question-mark {
+    position: absolute;
+    left: 13px;
+    top: 91px;
+    background: url("../images/v2/new-icon.png") no-repeat -166px -510px;
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+}
+
+    .question-mark.blue {
+        background: url(../images/v2/new-icon.png) no-repeat -137px -510px;
+    }
+
+.question-num {
+    width: 54px;
+    display: block;
+    text-align: center;
+    color: #505050;
+    font: normal 28px/44px 'arial';
+    background: #EBEBEB;
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+}
+
+.question-score {
+    margin: 12px 0;
+    color: #279EC9;
+    display: block;
+    font-size: 16px;
+}
+
+.question-explain {
+    background: #249DC8;
+    height: 24px;
+    line-height: 24px;
+    color: #fff;
+    font-size: 14px;
+    display: block;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+}
+
+.question-text, .content .question-text, .question-text, .content .question-text p {
+    font-size: 16px;
+    line-height: 25px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    word-break: break-all;
+    position: relative;
+}
+
+.blank-title td {
+    position: relative;
+}
+
+    .blank-title td img {
+        width: 100%;
+    }
+
+.blank-title .viewpic, .question-options .viewpic {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    z-index: 10000;
+    border: 0px;
+    box-shadow: 0px 1px 14px 5px #ddd;
+    border-radius: 15px;
+}
+
+.question-options .viewpic {
+    left: 12px;
+    top: 30px;
+}
+
+    .blank-title .viewpic a, .question-options .viewpic a {
+        position: absolute;
+        right: 10px;
+        bottom: 8px;
+        width: 23px;
+        height: 23px;
+        background: url(/Content/images/student/paper/viewpic.png) no-repeat;
+        background-size: 100%;
+    }
+
+.viewpic img {
+    border-radius: 5px;
+}
+
+.answeright, .answerwrong {
+    left: -92px;
+    top: 58px;
+    background: #FFE2BD;
+    padding: 3px 10px;
+    font-weight: normal;
+    color: green;
+    position: absolute;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+    .answeright span, .answerwrong span {
+        width: 17px;
+        height: 20px;
+        display: inline-block;
+        background: url(../images/Exam/iconjudge.png) no-repeat left top;
+        float: left;
+        margin-top: 1px;
+    }
+
+    .answerwrong span {
+        background-position: left -27px;
+    }
+
+
+.answerwrong {
+    color: red;
+}
+
+
+.question-img {
+    text-align: left;
+}
+
+    .question-img img {
+        max-width: 100%;
+    }
+
+.correctanswerask p {
+    font-size: 14px;
+    display: inline;
+    color: #666;
+}
+
+.askmarkarea {
+    width: 100%;
+    padding: 15px;
+    background: #fff8f2;
+    color: #d36003;
+    border: 1px solid #dfd5cc;
+    margin-bottom: 20px;
+}
+
+    .askmarkarea .askscore {
+        padding: 3px 30px;
+        background: #fff;
+        text-align: center;
+        border: 1px solid #d9d8d6;
+        margin-right: 10px;
+    }
+
+    .askmarkarea .askassess {
+        padding: 5px;
+        background: #fff;
+        text-align: center;
+        border: 1px solid #d9d8d6;
+    }
+
+    .askmarkarea td {
+        padding: 10px 0px;
+    }
+
+.options {
+    width: 20px;
+    height: 20px;
+    border: solid 1px #898989;
+    text-align: center;
+    color: #707070;
+    font: normal 12px/18px 'arial';
+    display: inline-block;
+    border-radius: 50%;
+    margin-right: 13px;
+}
+
+.multiselect .options {
+    border-radius: 0px;
+}
+
+.options-more {
+    width: 20px;
+    height: 20px;
+    border: solid 1px #898989;
+    text-align: center;
+    color: #707070;
+    font: normal 12px/18px 'arial';
+    display: inline-block;
+    margin-right: 13px;
+}
+
+.choice .options-more {
+    color: #fff;
+    border: solid 1px #63C058;
+    background: #63C058;
+}
+
+.answeritem {
+    border: 0px;
+    margin-right: 0px;
+    font-size: 14px;
+    width: 15px;
+}
+
+.foldingbutton, .folding-works, .folding-addworks {
+    display: inline-block;
+    cursor: pointer;
+    color: #dc6428;
+}
+
+    .foldingbutton i, .folding-works i, .folding-addworks i {
+        width: 13px;
+        height: 15px;
+        background: url(../images/course/course-manage-icon.png) no-repeat -185px -468px;
+        display: inline-block;
+        margin-left: 3px;
+    }
+
+    .foldingbutton.open i, .folding-works.open i, .folding-addworks.open i {
+        background: url(../images/course/course-manage-icon.png) no-repeat -80px -515px;
+    }
+
+.topic-analysis-con {
+    position: relative;
+    padding: 15px 10px;
+    margin-top: 12px;
+    border: 1px solid #ead0c3;
+}
+
+.topic-analysis {
+    margin-top: 11px;
+}
+
+.arrow-analysis {
+    position: absolute;
+    left: 25px;
+    top: -20px;
+    width: 50px;
+    height: 30px;
+    background: url(../images/course/course-manage-icon.png) no-repeat -214px -461px;
+}
+
+.topicanalysis p {
+    margin-bottom: 0px;
+}
+
+.question-options {
+    margin-top: 10px;
+}
+
+    .question-options span p {
+        font-size: inherit;
+        line-height: inherit;
+        padding: 0px;
+        display: inline;
+        margin: 0px;
+        word-wrap: break-word;
+        width: 665px;
+    }
+
+    .question-options li {
+        margin-bottom: 13px;
+        padding: 5px;
+        position: relative;
+    }
+
+        .question-options li a .options {
+            /*float:left*/
+        }
+
+        .question-options li img {
+            width: 100%;
+        }
+
+        .question-options li input {
+            vertical-align: middle;
+        }
+
+        .question-options li a {
+            color: #505050;
+            word-break: break-all;
+            text-decoration: none;
+        }
+
+            .question-options li a:hover, .question-options li a:active, .question-options li a:visited {
+                text-decoration: none;
+            }
+
+            .question-options li a .options {
+                /*float:left;*/
+            }
+
+        .question-options li span p {
+            word-wrap: break-word;
+            width: 93%;
+        }
+
+.jobpreview .question-options li span p {
+    word-wrap: break-word;
+}
+
+@media screen and (max-width: 1200px) {
+    .jobpreview .question-options li span p {
+        word-wrap: break-word;
+        width: 745px;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .jobpreview .question-options li span p {
+        word-wrap: break-word;
+        width: 570px;
+    }
+}
+
+@media screen and (max-width: 930px) {
+    .jobpreview .question-options li span p {
+        word-wrap: break-word;
+        width: 500px;
+    }
+}
+
+.question-options li label {
+    font-weight: normal;
+}
+
+.question-options li .radios {
+    margin: 0;
+}
+
+/*** 选对的或者正确答案的选项样式 ***/
+.blue, .right {
+    background: #E8F6E5;
+    color: #fff;
+    border-color: #E8F6E5;
+}
+
+    .blue .options, .right .options {
+        color: #fff;
+        border: solid 1px #23cfad;
+        background: #23cfad;
+    }
+
+    .blue .options-more, .right .options-more {
+        color: #fff;
+        border: solid 1px #23cfad;
+        background: #23cfad;
+    }
+
+    .blue a, .right a {
+        color: #F03C07;
+    }
+
+        .blue a span, .blue a span p, .blue span, .blue span p {
+            color: #23cfad;
+        }
+/*** 选错的选项样式 ***/
+.wrong {
+    background: #E8F6E5;
+    padding: 5px;
+}
+
+    .wrong .options {
+        color: #fff;
+        border: solid 1px #F03C07;
+        background: #F03C07;
+    }
+
+    .wrong .options-more {
+        color: #fff;
+        border: solid 1px #F03C07;
+        background: #F03C07;
+    }
+
+    .wrong a {
+        color: #505050;
+    }
+
+        .wrong a span, .wrong a span p, .wrong span, .wrong span p {
+            color: #F03C07;
+        }
+/*** 多选题样式 ***/
+.multiselect {
+    border-radius: 0px;
+}
+
+.question-options li.cur {
+    background: #E8F6E5;
+    padding: 5px;
+}
+
+    .question-options li.cur .options {
+        color: #fff;
+        border: solid 1px #23cfad;
+        background: #23cfad;
+    }
+
+    .question-options li.cur .options-more {
+        color: #fff;
+        border: solid 1px #23cfad;
+        background: #23cfad;
+    }
+
+    .question-options li.cur a {
+        color: #F03C07;
+    }
+
+        .question-options li.cur a span, .question-options li.cur a span p, .question-options li.cur span, .question-options li.cur span p {
+            color: #23cfad;
+        }
+
+.question-options li.choice {
+    background: #E8F6E5;
+    padding: 5px;
+}
+
+    .question-options li.choice .options {
+        color: #fff;
+        border: solid 1px #63C058;
+        background: #63C058;
+    }
+
+    .question-options li.choice .options-more {
+        color: #fff;
+        border: solid 1px #63C058;
+        background: #63C058;
+    }
+
+    .question-options li.choice a {
+        color: #505050;
+    }
+
+        .question-options li.choice a span, .question-options li.choice a span p, .question-options li.choice span, .question-options li.choice span p {
+            color: #444;
+        }
+
+.question-textarea {
+    border: solid #C6C6C6 1px;
+    background: #fff;
+    width: 95%;
+    height: 80px;
+    padding: 10px;
+    resize: none;
+}
+
+.fillipt {
+    width: 90px;
+    height: 25px;
+    border: solid 1px #CDCDCD;
+    line-height: 23px;
+    padding-left: 10px;
+    vertical-align: middle;
+    margin: 0 5px;
+}
+
+.question-cont-right {
+    min-height: 140px;
+    margin-left: 54px;
+    border-left: 1px solid #ECECEC;
+    padding-left: 26px;
+    color: #505050;
+}
+
+.question-cont-right-video {
+    min-height: 260px;
+    margin-left: 54px;
+    border-left: 1px solid #ECECEC;
+    padding-left: 26px;
+    color: #505050;
+}
+
+.content-style {
+    position: absolute;
+    right: 0;
+    top: 0px;
+}
+
+.right-top {
+    line-height: 62px;
+    background: #F9F9F9;
+    border-bottom: 1px solid #D9D9D9;
+    padding-left: 20px;
+    display: none;
+}
+
+.right-top-btn {
+    width: 130px;
+    height: 32px;
+    border: none;
+    border-radius: 2px;
+    padding: 0 31px;
+    line-height: 32px;
+    text-align: center;
+    color: #fff;
+}
+
+.bgblue {
+    background: #53AEDA;
+    cursor: pointer;
+    display: none;
+}
+
+.bggrey {
+    background: #9A9A9A;
+    cursor: not-allowed;
+}
+
+.bggreen {
+    background: #63C058;
+    cursor: pointer;
+}
+
+.bgsubmit {
+    background: #9A9A9A;
+    cursor: pointer;
+}
+
+.answerscore {
+    text-align: center;
+    font-size: 16px;
+    width: 60px;
+}
+
+.showronganswer {
+    height: 60px;
+    background: #f9f9f9;
+    border-bottom: 1px solid #d8d8d8;
+    line-height: 64px;
+    font-size: 16px;
+    padding-left: 20px;
+}
+
+    .showronganswer label {
+        font-weight: normal;
+    }
+
+.resultshow {
+}
+
+    .resultshow .chioce-btn {
+        max-height: 540px;
+        overflow: auto;
+        width: 284px;
+    }
+
+.chioce-btn .sigletopics {
+    position: relative;
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.resultshow .question-result-item {
+    margin: 0;
+}
+
+.resultshow .question-resul-title {
+    line-height: 40px;
+    font-weight: normal;
+}
+
+.resultshow .question-resul-tab a {
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    border: solid 2px #EBEBEB;
+    border-radius: 2px;
+    background: #EBEBEB;
+    display: inline-block;
+    margin: 0 3px 3px 0;
+    color: #404040;
+    font: normal 16px/28px 'arial';
+    float: left;
+}
+
+    .resultshow .question-resul-tab a span {
+        display: block;
+        width: 30px;
+        height: 0px;
+        background: #EBEBEB;
+        margin-left: -2px;
+        margin-top: -2px;
+        line-height: 30px;
+    }
+
+    .resultshow .question-resul-tab a.doing {
+        background: #EBEBEB;
+        border: solid 2px #64BF58;
+        color: #404040;
+    }
+
+    .resultshow .question-resul-tab a.done {
+        background: #62BF55;
+        border: solid 2px #62BF55;
+        color: #fff;
+    }
+
+
+    .resultshow .question-resul-tab a.mark {
+        background: #FC711E;
+        border: solid 2px #FC711E;
+        color: #fff;
+        padding: 0;
+    }
+
+
+    .resultshow .question-resul-tab a.doing span {
+        color: #000;
+    }
+
+    .resultshow .question-resul-tab a.mark span {
+        color: #fff;
+    }
+
+    .resultshow .question-resul-tab a.done span {
+        color: #fff;
+    }
+
+.resultshow .question-result-explain {
+    padding: 50px 0 20px;
+    height: 16px;
+    line-height: 16px;
+}
+
+    .resultshow .question-result-explain li {
+        float: left;
+        margin-right: 10px;
+    }
+
+    .resultshow .question-result-explain .icon-explain {
+        width: 16px;
+        height: 16px;
+        border-radius: 2px;
+        display: inline-block;
+        margin-right: 3px;
+        vertical-align: middle;
+    }
+
+    .resultshow .question-result-explain .marki {
+        background: #FC711C;
+        border: solid 1px #FC711C;
+    }
+
+    .resultshow .question-result-explain .donei {
+        background: #63C058;
+        border: solid 1px #63C058;
+    }
+
+    .resultshow .question-result-explain .doingi {
+        background: #ECECEC;
+        border: solid 1px #67C259;
+    }
+
+    .resultshow .question-result-explain .undo {
+        background: #EBEBEB;
+        border: solid 1px #EBEBEB;
+    }
+
+.right-bottom {
+    padding: 10px 0;
+    text-align: center;
+    color: #fff;
+    position: relative;
+    height: 120px;
+}
+
+    .right-bottom input {
+        position: absolute;
+        left: 25px;
+        top: 30px;
+    }
+
+.right-bottom-btn {
+    width: 200px;
+    height: 50px;
+    border: none;
+    border-radius: 2px;
+    font-size: 20px;
+}
+
+.right-time-div {
+    text-align: center;
+    padding-bottom: 5px;
+}
+
+.model-enlarge-left {
+    float: left;
+    width: 49%;
+    padding-right: 10px;
+    height: 260px;
+    overflow: auto;
+}
+
+.model-enlarge-right {
+    float: left;
+    width: 50%;
+    padding-left: 10px;
+    height: 260px;
+    overflow: auto;
+}
+
+.model-enlarge-video {
+    width: 400px;
+    height: 260px;
+}
+
+.time-count-down-left {
+    font-size: 28px;
+    color: #FF3333;
+}
+
+.time-count-down-center {
+    font-size: 28px;
+    color: #CCCCCC;
+}
+
+.time-count-down-right {
+    font-size: 28px;
+    color: #00CC66;
+}
+
+.div-center {
+    text-align: center;
+}
+
+.btn-message-font {
+    font-size: 16px;
+}
+
+.btn-message-font-color {
+    font-size: 16px;
+    color: #FF3333;
+}
+
+.img-time-center {
+    padding-bottom: 10px;
+}
+/*title样式 stsart*/
+.title-content-block {
+    min-height: 170px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+    .title-content-block > .title {
+        border: 0px;
+        height: 80px;
+        color: #222;
+        padding: 20px;
+        line-height: 80px;
+        border-bottom: solid 1px #d3d3d3;
+    }
+
+.row > .title-content-style {
+    min-width: 100%;
+    background-color: #fff;
+    margin-bottom: 20px;
+    padding: 0px;
+    margin-top: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/*content-block样式 start*/
+.content-block {
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    min-height: 680px; /*margin:0px -5px 0px -5px;*/
+}
+
+    .content-block > .title {
+        border: 0px;
+        height: 80px;
+        color: #222;
+        padding: 20px;
+        line-height: 80px;
+        border-bottom: solid 1px #d3d3d3;
+    }
+
+        .content-block > .title > h4 > small {
+            margin-top: 16px;
+        }
+
+        .content-block > .title > span {
+            float: right;
+        }
+
+    .content-block > .info {
+        padding: 20px;
+        min-height: 300px;
+    }
+
+.row > .content-style {
+    margin-bottom: 20px;
+    background-color: #FFF;
+}
+
+.row > .padding-right {
+    padding: 0px 20px 0px 0px;
+}
+
+.bordes {
+    border: 1px solid red;
+}
+
+.color-blue {
+    color: #269CCC;
+}
+
+.answering {
+    font-size: 18px;
+    padding-top: 37px;
+    display: inline-block;
+}
+/*content-block样式 end*/
+
+/*个人设置样式 start*/
+.user-config-left {
+    padding: 0px 20px 0px 0px;
+    padding-right: 10px;
+}
+
+.user-config-center {
+    padding: 0px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.user-config-left > .left-content {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    min-height: 750px; /*margin:0px -5px 0px -5px;*/
+    background-color: #FFF;
+    padding: 0px;
+}
+
+.content p.ftsanswer {
+    font-size: 14pt;
+    color: #f37125;
+    padding-top: 31px;
+    text-align: center;
+}
+
+.reading-list {
+    position: relative;
+}
+
+    .reading-list .question-mark {
+        left: -3px;
+        top: 34px;
+    }
+
+    .reading-list ul {
+        padding-left: 30px;
+    }
+
+.blank-title {
+    margin-bottom: 25px;
+    width: 100%;
+}
+
+.blankwrap {
+    margin-bottom: 20px;
+    width: 100%;
+    display: inline-block;
+}
+
+    .blankwrap .item {
+        display: inline-block;
+    }
+
+/*** 答案是对还是错的不同背景色，以及对之前样式的调整 ***/
+
+.result-right, .result-wrong {
+    position: relative;
+    background-color: #f3f9f7;
+    /*margin-left:-26px;*/
+    padding-bottom: 17px;
+}
+
+.result-wrong {
+    background-color: #faf1f2;
+}
+
+.answer-right, .answer-wrong {
+    position: absolute;
+    top: 45%;
+    left: 12px;
+    width: 36px;
+    height: 25px;
+}
+
+.result-wrong > p, .result-right > p {
+    color: #3dd3a5;
+    font-size: 18px;
+    margin-left: 110px;
+}
+
+.hassubqes .result-wrong > p, .hassubqes .result-right > p {
+    color: #3dd3a5;
+    font-size: 18px;
+    margin-left: 106px;
+}
+
+.result-wrong > p i, .result-right > p i {
+    color: #3dd3a5;
+    font-size: 18px;
+}
+
+.resutlt-answer .topic-analysis {
+    margin-left: 108px;
+}
+
+.essay_question .topic-analysis {
+    margin-left: 0px;
+}
+
+
+.topic-analysis span {
+    color: #242827;
+    margin-left: 24px;
+    color: #242827;
+    margin-top: 8px;
+    display: inline-block;
+    font-size: 18px;
+}
+
+.resutlt-answer span:last-child {
+    margin-top: 3px;
+    display: inline-block;
+}
+
+.resutlt-answer span:last-child {
+    margin-top: 3px;
+    display: inline-block;
+}
+
+.teacher-comment {
+    width: 70%;
+    height: 100px;
+    padding: 1%;
+    margin-top: 25px;
+}
+
+.topic-analysis .foldingbutton, .topic-analysis .foldingbutton span {
+    margin-left: 0px;
+}
+
+.readonly {
+    background: #ccc;
+}
+
+/** 表格样式 **/
+.tbl-answer {
+    /*width:100%;*/
+}
+
+    .tbl-answer td {
+        font-size: 16px;
+        padding: 2px 0px;
+        word-break: break-all;
+    }
+
+        .tbl-answer td img {
+            max-width: 85%;
+        }
+
+
+/*新增样式，*/
+.resutlt-answer span:last-child {
+    margin-top: 3px;
+    display: inline-block;
+}
+
+.result-wrong p span, .result-wrong p span .answeritem {
+    color: red;
+}
+
+.result-right-green {
+    color: #3dd3a5;
+    font-size: 18px;
+}
+
+.essayQuestion_bgc .tbl-answer, .essayQuestion_bgc .essay_question {
+    margin-left: 140px;
+}
+
+.topic-analysis3 span, .topic-analysis3 {
+    margin-left: 0;
+    margin-top: 0;
+    font-size: 16px;
+}
+
+.leftfont {
+    font-size: 20px;
+    display: inline-block;
+    position: absolute;
+    left: 37px;
+    top: 40px;
+}
+
+.question-options .essay_question {
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+.wendapage {
+    position: relative;
+}
+
+textarea {
+    border: 1px solid #dddddd;
+}
+
+input {
+    border: 1px solid #dddddd;
+}
+
+.question-cont {
+    padding: 25px 18px 0px 30px;
+}
+
+.rightflag, .resultshow .question-resul-tab .rightflag {
+    background: #34d9af;
+}
+
+.resultshow .question-resul-tab .rightflag, .resultshow .question-resul-tab .wrongflag, .resultshow .question-resul-tab .waitflag {
+    color: #fff;
+    border: 0px;
+}
+
+.wrongflag, .resultshow .question-resul-tab .wrongflag {
+    background: #ea173a;
+}
+
+.waitflag, .resultshow .question-resul-tab .waitflag {
+    background: #fad155;
+}
+
+.reading-list.noTitle {
+    position: relative;
+}
+
+.noTitle .question-options {
+    padding: 15px 0px;
+    border-bottom: 1px dotted #ddd;
+}
+
+.reading-list.noTitle h3 {
+    position: absolute;
+    top: -20px;
+}
+
+.reading-list.noTitle ul {
+    margin-left: 40px;
+}
+/** 人脸识别 **/
+#faceframe {
+    overflow: hidden;
+}
+
+.facewrap {
+    display: none;
+}
+
+.faceshade {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+}
+
+.face, .operatarea, .checkarea, .face .tips {
+    width: 680px;
+    margin: 20px auto 0px;
+}
+
+#camresult {
+    display: none;
+}
+
+.checkarea {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.face .tips {
+    color: #999999;
+}
+
+.face .explain {
+    border: 1px dotted #ccc;
+    padding: 10px 20px;
+}
+
+.face .qesicon {
+    width: 18px;
+    margin-left: 10px;
+    margin-top: -3px;
+}
+
+.face h2 {
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: bolder;
+}
+
+.face .explain p {
+    color: #999999;
+    margin: 0px;
+    line-height: 30px;
+}
+
+.operatarea .l {
+    text-align: center;
+    width: 323px;
+}
+
+    .operatarea .l .userpic {
+        width: 323px;
+        height: 244px;
+        border: 1px solid #e1e1e1;
+    }
+
+    .operatarea .l .username {
+        text-align: center;
+        margin-top: 12px;
+        font-size: 16px;
+    }
+
+.operatarea .userpic img {
+    height: 244px;
+}
+
+.operatarea .r {
+    float: right;
+    width: 323px;
+    position: relative;
+}
+
+.operatarea .errormsg {
+    color: red;
+    font-size: 12px;
+    text-align: center;
+    margin-top: 12px;
+}
+
+.operatarea .errorpic {
+    padding-top: 8px;
+    max-width: 321px;
+    margin-top: 3px;
+    overflow: hidden;
+    text-align: center;
+}
+
+    .operatarea .errorpic img {
+        /*width: 304px;*/
+        height: 230px;
+    }
+
+.operatarea .camboxwrap {
+    width: 323px;
+    height: 244px;
+    background: url(/Content/images/student/paper/facebg.jpg) no-repeat;
+}
+
+#cambox {
+    width: 314px;
+    margin: 0px auto;
+}
+
+    #cambox video {
+        margin-top: 7px;
+        margin-left: -1px;
+    }
+
+.checkfacebtn, .removepicbtn {
+    background: #3fa8ef;
+    border-radius: 3px;
+    color: #fff;
+    padding: 10px 20px;
+    border: 0px;
+}
+
+.removepicbtn {
+    display: none;
+}
+/* 查看作业相关css */
+.KnowledgeArea{
+    background: #F2F7FF;
+    padding:16px;
+    box-sizing:border-box;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    font-size:14px;
+    color:#333
+}
+.KnowledgeText{
+    flex: 1;
+    margin-top: -2px;
+}
+.KnowledgeItem{
+    color: #1677FF;
+    line-height:24px;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: visible;
+}
+
+.KnowledgeItem .videoArea{
+    border: 1px solid #409EFF;
+    background: #fff;
+    padding: 10px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: none;
+}
+.KnowledgeItem .videoItem{
+    color: #1677FF;
+    line-height:24px;
+    border-bottom: 1px solid #1677FF;
+    cursor: pointer;
+}

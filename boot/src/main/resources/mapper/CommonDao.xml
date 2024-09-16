@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dao.CommonDao">
+	<select id="pieSum" 		resultType="map">
+		<!--		<if test="条件自己写"></if><where></where>-->
+		select
+		d.index_name 						as name, 		<!-- 字典表						-->
+		a.shangpin_order_types 				as groupColumn, <!-- 这一列页面无用,用于排查问题	-->
+		sum(a.shangpin_order_true_price) 	as value
+		from shangpin_order a
+		LEFT JOIN dictionary d ON a.shangpin_order_types=d.code_index d.dic_code= 'shangpin_order_types' <!-- 字典表-->
+		<if test="riqi != null and riqi != ''">
+			AND date_format(a.insert_time, "%Y-%m") = #{riqi}  <!-- "%Y-%m-%d"	-->
+		</if>
+
+
+		GROUP BY a.shangpin_order_types
+	</select>
+	<select id="pieCount" 		resultType="map">
+		select
+		d.index_name 						as name, <!-- 字典表 -->
+		a.shangpin_order_types 				as groupColumn, <!-- 这一列页面无用,用于排查问题 -->
+		count(*) 	as value
+		from shangpin_order a
+		LEFT JOIN dictionary d ON a.shangpin_order_types=d.code_index where d.dic_code= 'shangpin_order_types' <!-- 字典表 -->
+		<if test="riqi != null and riqi != ''">
+			AND date_format(a.insert_time, "%Y-%m") = #{riqi} <!-- "%Y-%m-%d" -->
+		</if>
+		GROUP BY a.shangpin_order_types
+	</select>
+	<select id="barSumOne" 		resultType="map">
+		select
+		d.index_name 						as name, <!-- 字典表 -->
+		a.shangpin_order_types 				as groupColumn, <!-- 这一列页面无用,用于排查问题 -->
+		sum(a.shangpin_order_true_price) 	as value
+		from shangpin_order a
+		LEFT JOIN dictionary d ON a.shangpin_order_types=d.code_index where d.dic_code= 'shangpin_order_types' -- 字典表 -->
+		<if test="riqi != null and riqi != ''">
+			AND date_format(a.insert_time, "%Y-%m") = #{riqi} <!-- "%Y-%m-%d" -->
+		</if>
+		GROUP BY a.shangpin_order_types
+
+		<!-- 考试排名统计 -->
+		<!-- select
+		yonghu.yonghu_name 	as name,
+		d.total_score 		as value
+		from examrecord d
+		left join yonghu on yonghu.id=d.yonghu_id
+		where d.exampaper_id=#{exampaperId}
+		order by value desc -->
+	</select>
+	<select id="barCountOne" 	resultType="map">
+		select
+		d.index_name 						as name, <!-- 字典表 -->
+		a.shangpin_order_types 				as groupColumn, <!-- 这一列页面无用,用于排查问题 -->
+		count(*) 	as value
+		from shangpin_order a
+		LEFT JOIN dictionary d ON a.shangpin_order_types=d.code_index where d.dic_code= 'shangpin_order_types' <!-- 字典表 -->
+		<if test="riqi != null and riqi != ''">
+			AND date_format(a.insert_time, "%Y-%m") = #{riqi} <!-- "%Y-%m-%d" -->
+		</if>
+		GROUP BY a.shangpin_order_types
+	</select>
+	<select id="barSumTwo" 		resultType="map">
+		select
+		date_format(a.insert_time, '%Y-%m')	as name1,
+		s.shangpin_name 					as name2,
+		sum(a.shangpin_order_true_price) 	as value
+		from shangpin_order a
+		left JOIN shangpin s on a.shangpin_id=s.id
+		where 1=1
+		<if test="riqi != null and riqi != ''">
+			AND date_format(a.insert_time, "%Y-%m") = #{riqi} <!-- "%Y-%m-%d" -->
+		</if>
+		GROUP BY date_format(a.insert_time, '%Y-%m'),a.shangpin_id
+		ORDER BY name1 asc
+	</select>
+	<select id="barCountTwo" 	resultType="map">
+		select
+		date_format(a.insert_time, '%Y-%m')	as name1,
+		s.shangpin_name 					as name2,
+		count(*) 				as value
+		from shangpin_order a
+		left JOIN shangpin s on a.shangpin_id=s.id
+		where 1=1
+		<if test="riqi != null and riqi != ''">
+			AND date_format(a.insert_time, "%Y-%m") = #{riqi} <!-- "%Y-%m-%d" -->
+		</if>
+		GROUP BY date_format(a.insert_time, '%Y-%m'),a.shangpin_id
+		ORDER BY name1 asc
+	</select>
+	<select id="queryScore" resultType="map" >
+		SELECT
+			avg(a.${average}) as value
+		FROM
+			${tableName} a
+		WHERE
+			a.${condition1} = #{condition1Value}
+	</select>
+	<select id="newSelectGroupSum" resultType="map">
+		select
+			d.index_name as name,
+			a.${groupColumn} as groupColumn, <!-- 这一列页面无用,用于排查问题 -->
+			sum(a.${sumColumn}) as value
+		from ${tableName} a
+			LEFT JOIN dictionary d ON a.${groupColumn}=d.code_index where d.dic_code= #{groupColumn}
+		<if test="riqi != null and riqi != ''">
+			AND date_format(a.insert_time, "%Y-%m") = #{riqi} <!-- "%Y-%m-%d" -->
+		</if>
+		GROUP BY a.${groupColumn}
+	</select>
+	<select id="newSelectGroupCount" resultType="map">
+		select
+			d.index_name as name,
+			a.${groupColumn} as groupColumn, <!-- 这一列页面无用,用于排查问题 -->
+			count(*) as value
+		from ${tableName} a
+		LEFT JOIN dictionary d ON a.${groupColumn}=d.code_index where d.dic_code= #{groupColumn}
+		<if test="riqi != null and riqi != ''">
+			AND date_format(a.insert_time, "%Y-%m") = #{riqi} <!-- "%Y-%m-%d" -->
+		</if>
+		GROUP BY a.${groupColumn}
+	</select>
+	<select id="barSum" resultType="map">
+		select
+		<if test="thisTable != null and thisTable.date != null">
+			<foreach item="item" index="index" collection="thisTable.date" open="" separator="," close=",">
+				date_format(thisTableName.${item}, '%Y-%m') as thisDate${index}
+			</foreach>
+		</if>
+		<if test="joinTable != null and joinTable.date != null">
+			<foreach item="item" index="index" collection="joinTable.date" open="" separator="," close=",">
+				date_format(joinTableName.${item}, '%Y-%m') as joinDate${index}
+			</foreach>
+		</if>
+		<if test="thisTable != null and thisTable.string != null">
+			<foreach item="item" index="index" collection="thisTable.string" open="" separator="," close=",">
+				thisTableName.${item} as thisString${index}
+			</foreach>
+		</if>
+		<if test="joinTable != null and joinTable.string != null">
+			<foreach item="item" index="index" collection="joinTable.string" open="" separator="," close=",">
+				joinTableName.${item} as joinString${index}
+			</foreach>
+		</if>
+		<if test="thisTable != null and thisTable.types != null">
+			<foreach item="item" index="index" collection="thisTable.types" open="" separator="," close=",">
+				${item}.index_name as thisTypes${index}
+			</foreach>
+		</if>
+		<if test="joinTable != null and joinTable.types != null">
+			<foreach item="item" index="index" collection="joinTable.types" open="" separator="," close=",">
+				${item}.index_name as joinTypes${index}
+			</foreach>
+		</if>
+		sum(thisTableName.${thisTable.sumColum}) as value
+		from ${thisTable.tableName} thisTableName
+		<if test="joinTable != null and joinTable.tableName != null">
+			LEFT JOIN ${joinTable.tableName} joinTableName on thisTableName.${joinTable.tableName}_id = joinTableName.id
+		</if>
+
+		<choose>
+			<when test="(thisTable != null and thisTable.types != null) || (joinTable != null and joinTable.types != null)" >
+				<if test="thisTable != null and thisTable.types != null">
+					<foreach item="item" index="index" collection="thisTable.types" open="" separator="," close="">
+						LEFT JOIN dictionary ${item} ON thisTableName.${item}=${item}.code_index
+							WHERE ${item}.dic_code= #{item}
+						<if test="(riqi != null and riqi != '') and (dateFormat != null and dateFormat != '')">
+							AND date_format(thisTableName.insert_time, #{dateFormat}) = #{riqi}
+						</if>
+					</foreach>
+				</if>
+				<if test="joinTable != null and joinTable.types != null">
+					<foreach item="item" index="index" collection="joinTable.types" open="" separator="," close="">
+						LEFT JOIN dictionary ${item} ON joinTableName.${item}=${item}.code_index
+							WHERE ${item}.dic_code= #{item}
+						<if test="(riqi != null and riqi != '') and (dateFormat != null and dateFormat != '')">
+							AND date_format(thisTableName.insert_time, #{dateFormat}) = #{riqi}
+						</if>
+					</foreach>
+				</if>
+			</when>
+			<otherwise>
+				<if test="(riqi != null and riqi != '') and (dateFormat != null and dateFormat != '')">
+					WHERE date_format(thisTableName.insert_time, #{dateFormat}) = #{riqi}
+				</if>
+			</otherwise>
+		</choose>
+		GROUP BY
+		<if test="thisTable != null and thisTable.date != null">
+			<foreach item="item" index="index" collection="thisTable.date" open="" separator="," close="">
+				date_format(thisTableName.${item}, '%Y-%m')
+			</foreach>
+			<choose>
+				<when test="(thisTable != null and( thisTable.string != null or thisTable.types != null ) )  or (joinTable != null and( joinTable.date != null or joinTable.string != null or joinTable.types != null ) )" >
+					,
+				</when>
+				<otherwise>
+				</otherwise>
+			</choose>
+		</if>
+		<if test="joinTable != null and joinTable.date != null">
+			<foreach item="item" index="index" collection="joinTable.date" open="" separator="," close="">
+				date_format(joinTableName.${item}, '%Y-%m')
+			</foreach>
+			<choose>
+				<when test="(thisTable != null and( thisTable.string != null or thisTable.types != null ) )  or (joinTable != null and( joinTable.string != null or joinTable.types != null ) )" >
+					,
+				</when>
+				<otherwise>
+				</otherwise>
+			</choose>
+		</if>
+		<if test="thisTable != null and thisTable.string != null">
+			<foreach item="item" index="index" collection="thisTable.string" open="" separator="," close="">
+				thisTableName.${item}
+			</foreach>
+			<choose>
+				<when test="(thisTable != null and( thisTable.types != null ) )  or (joinTable != null and( joinTable.string != null or joinTable.types != null ) )" >
+					,
+				</when>
+				<otherwise>
+				</otherwise>
+			</choose>
+		</if>
+		<if test="joinTable != null and joinTable.string != null">
+			<foreach item="item" index="index" collection="joinTable.string" open="" separator="," close="">
+				joinTableName.${item}
+			</foreach>
+			<choose>
+				<when test="(thisTable != null and( thisTable.types != null ) )  or (joinTable != null and( joinTable.types != null ) )" >
+					,
+				</when>
+				<otherwise>
+				</otherwise>
+			</choose>
+		</if>
+		<if test="thisTable != null and thisTable.types != null">
+			<foreach item="item" index="index" collection="thisTable.types" open="" separator="," close="">
+				thisTableName.${item}
+			</foreach>
+			<choose>
+				<when test="joinTable != null and joinTable.types != null" >
+					,
+				</when>
+				<otherwise>
+				</otherwise>
+			</choose>
+		</if>
+		<if test="joinTable != null and joinTable.types != null">
+			<foreach item="item" index="index" collection="joinTable.types" open="" separator="," close="">
+				joinTableName.${item}
+			</foreach>
+		</if>
+		ORDER BY value DESC
+	</select>
+	<select id="barCount" resultType="map">
+		select
+		<if test="thisTable != null and thisTable.date != null">
+			<foreach item="item" index="index" collection="thisTable.date" open="" separator="," close=",">
+				date_format(thisTableName.${item}, '%Y-%m') as thisDate${index}
+			</foreach>
+		</if>
+		<if test="joinTable != null and joinTable.date != null">
+			<foreach item="item" index="index" collection="joinTable.date" open="" separator="," close=",">
+				date_format(joinTableName.${item}, '%Y-%m') as joinDate${index}
+			</foreach>
+		</if>
+		<if test="thisTable != null and thisTable.string != null">
+			<foreach item="item" index="index" collection="thisTable.string" open="" separator="," close=",">
+				thisTableName.${item} as thisString${index}
+			</foreach>
+		</if>
+		<if test="joinTable != null and joinTable.string != null">
+			<foreach item="item" index="index" collection="joinTable.string" open="" separator="," close=",">
+				joinTableName.${item} as joinString${index}
+			</foreach>
+		</if>
+		<if test="thisTable != null and thisTable.types != null">
+			<foreach item="item" index="index" collection="thisTable.types" open="" separator="," close=",">
+				${item}.index_name as thisTypes${index}
+			</foreach>
+		</if>
+		<if test="joinTable != null and joinTable.types != null">
+			<foreach item="item" index="index" collection="joinTable.types" open="" separator="," close=",">
+				${item}.index_name as joinTypes${index}
+			</foreach>
+		</if>
+		count(*) as value
+		from ${thisTable.tableName} thisTableName
+		<if test="joinTable != null and joinTable.tableName != null">
+			LEFT JOIN ${joinTable.tableName} joinTableName on thisTableName.${joinTable.tableName}_id = joinTableName.id
+		</if>
+
+		<choose>
+			<when test="(thisTable != null and thisTable.types != null) || (joinTable != null and joinTable.types != null)" >
+				<if test="thisTable != null and thisTable.types != null">
+					<foreach item="item" index="index" collection="thisTable.types" open="" separator="," close="">
+						LEFT JOIN dictionary ${item} ON thisTableName.${item}=${item}.code_index
+						WHERE ${item}.dic_code= #{item}
+						<if test="(riqi != null and riqi != '') and (dateFormat != null and dateFormat != '')">
+							AND date_format(thisTableName.insert_time, #{dateFormat}) = #{riqi}
+						</if>
+					</foreach>
+				</if>
+				<if test="joinTable != null and joinTable.types != null">
+					<foreach item="item" index="index" collection="joinTable.types" open="" separator="," close="">
+						LEFT JOIN dictionary ${item} ON joinTableName.${item}=${item}.code_index
+						WHERE ${item}.dic_code= #{item}
+						<if test="(riqi != null and riqi != '') and (dateFormat != null and dateFormat != '')">
+							AND date_format(thisTableName.insert_time, #{dateFormat}) = #{riqi}
+						</if>
+					</foreach>
+				</if>
+			</when>
+			<otherwise>
+				<if test="(riqi != null and riqi != '') and (dateFormat != null and dateFormat != '')">
+					WHERE date_format(thisTableName.insert_time, #{dateFormat}) = #{riqi}
+				</if>
+			</otherwise>
+		</choose>
+		GROUP BY
+		<if test="thisTable != null and thisTable.date != null">
+			<foreach item="item" index="index" collection="thisTable.date" open="" separator="," close="">
+				date_format(thisTableName.${item}, '%Y-%m')
+			</foreach>
+			<choose>
+				<when test="(thisTable != null and( thisTable.string != null or thisTable.types != null ) )  or (joinTable != null and( joinTable.date != null or joinTable.string != null or joinTable.types != null ) )" >
+					,
+				</when>
+				<otherwise>
+				</otherwise>
+			</choose>
+		</if>
+		<if test="joinTable != null and joinTable.date != null">
+			<foreach item="item" index="index" collection="joinTable.date" open="" separator="," close="">
+				date_format(joinTableName.${item}, '%Y-%m')
+			</foreach>
+			<choose>
+				<when test="(thisTable != null and( thisTable.string != null or thisTable.types != null ) )  or (joinTable != null and( joinTable.string != null or joinTable.types != null ) )" >
+					,
+				</when>
+				<otherwise>
+				</otherwise>
+			</choose>
+		</if>
+		<if test="thisTable != null and thisTable.string != null">
+			<foreach item="item" index="index" collection="thisTable.string" open="" separator="," close="">
+				thisTableName.${item}
+			</foreach>
+			<choose>
+				<when test="(thisTable != null and( thisTable.types != null ) )  or (joinTable != null and( joinTable.string != null or joinTable.types != null ) )" >
+					,
+				</when>
+				<otherwise>
+				</otherwise>
+			</choose>
+		</if>
+		<if test="joinTable != null and joinTable.string != null">
+			<foreach item="item" index="index" collection="joinTable.string" open="" separator="," close="">
+				joinTableName.${item}
+			</foreach>
+			<choose>
+				<when test="(thisTable != null and( thisTable.types != null ) )  or (joinTable != null and( joinTable.types != null ) )" >
+					,
+				</when>
+				<otherwise>
+				</otherwise>
+			</choose>
+		</if>
+		<if test="thisTable != null and thisTable.types != null">
+			<foreach item="item" index="index" collection="thisTable.types" open="" separator="," close="">
+				thisTableName.${item}
+			</foreach>
+			<choose>
+				<when test="joinTable != null and joinTable.types != null" >
+					,
+				</when>
+				<otherwise>
+				</otherwise>
+			</choose>
+		</if>
+		<if test="joinTable != null and joinTable.types != null">
+			<foreach item="item" index="index" collection="joinTable.types" open="" separator="," close="">
+				joinTableName.${item}
+			</foreach>
+		</if>
+		ORDER BY value DESC
+	</select>
+</mapper>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.CangkuDao">
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        a.id as id
+        ,a.cangku_name as cangkuName
+        ,a.cangku_uuid_number as cangkuUuidNumber
+        ,a.cangku_photo as cangkuPhoto
+        ,a.cangku_address as cangkuAddress
+        ,a.cangku_types as cangkuTypes
+        ,a.cangku_content as cangkuContent
+        ,a.cangku_delete as cangkuDelete
+        ,a.insert_time as insertTime
+        ,a.create_time as createTime
+    </sql>
+    <select id="selectListView" parameterType="map" resultType="com.entity.view.CangkuView" >
+        SELECT
+        <include refid="Base_Column_List" />
+        <!-- 级联表的字段 -->
+
+        FROM cangku  a
+
+        <where>
+            <if test="params.ids != null">
+                and a.id in
+                <foreach item="item" index="index" collection="params.ids" open="(" separator="," close=")">
+                #{item}
+                </foreach>
+            </if>
+            <if test=" params.cangkuName != '' and params.cangkuName != null and params.cangkuName != 'null' ">
+                and a.cangku_name like CONCAT('%',#{params.cangkuName},'%')
+            </if>
+            <if test=" params.cangkuUuidNumber != '' and params.cangkuUuidNumber != null and params.cangkuUuidNumber != 'null' ">
+                and a.cangku_uuid_number like CONCAT('%',#{params.cangkuUuidNumber},'%')
+            </if>
+            <if test=" params.cangkuAddress != '' and params.cangkuAddress != null and params.cangkuAddress != 'null' ">
+                and a.cangku_address like CONCAT('%',#{params.cangkuAddress},'%')
+            </if>
+            <if test="params.cangkuTypes != null and params.cangkuTypes != ''">
+                and a.cangku_types = #{params.cangkuTypes}
+            </if>
+            <if test=" params.cangkuContent != '' and params.cangkuContent != null and params.cangkuContent != 'null' ">
+                and a.cangku_content like CONCAT('%',#{params.cangkuContent},'%')
+            </if>
+            <if test="params.cangkuDeleteStart != null and params.cangkuDeleteStart != ''">
+                <![CDATA[  and a.cangku_delete >= #{params.cangkuDeleteStart}   ]]>
+            </if>
+            <if test="params.cangkuDeleteEnd != null and params.cangkuDeleteEnd != ''">
+                <![CDATA[  and a.cangku_delete <= #{params.cangkuDeleteEnd}   ]]>
+            </if>
+             <if test="params.cangkuDelete != null and params.cangkuDelete != ''">
+                and a.cangku_delete = #{params.cangkuDelete}
+             </if>
+            <if test=" params.insertTimeStart != '' and params.insertTimeStart != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(a.insert_time) >= UNIX_TIMESTAMP(#{params.insertTimeStart}) ]]>
+            </if>
+            <if test=" params.insertTimeEnd != '' and params.insertTimeEnd != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(a.insert_time) <= UNIX_TIMESTAMP(#{params.insertTimeEnd}) ]]>
+            </if>
+            <if test="params.insertTime != null and params.insertTime != ''">
+                and a.insert_time = #{params.insertTime}
+            </if>
+
+        </where>
+        order by a.${params.sort} ${params.order}
+    </select>
+
+</mapper>

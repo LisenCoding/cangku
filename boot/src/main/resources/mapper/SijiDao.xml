@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.SijiDao">
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        a.id as id
+        ,a.siji_uuid_number as sijiUuidNumber
+        ,a.siji_name as sijiName
+        ,a.siji_phone as sijiPhone
+        ,a.siji_id_number as sijiIdNumber
+        ,a.siji_photo as sijiPhoto
+        ,a.sex_types as sexTypes
+        ,a.siji_email as sijiEmail
+        ,a.create_time as createTime
+    </sql>
+    <select id="selectListView" parameterType="map" resultType="com.entity.view.SijiView" >
+        SELECT
+        <include refid="Base_Column_List" />
+        <!-- 级联表的字段 -->
+
+        FROM siji  a
+
+        <where>
+            <if test="params.ids != null">
+                and a.id in
+                <foreach item="item" index="index" collection="params.ids" open="(" separator="," close=")">
+                #{item}
+                </foreach>
+            </if>
+            <if test=" params.sijiUuidNumber != '' and params.sijiUuidNumber != null and params.sijiUuidNumber != 'null' ">
+                and a.siji_uuid_number like CONCAT('%',#{params.sijiUuidNumber},'%')
+            </if>
+            <if test=" params.sijiName != '' and params.sijiName != null and params.sijiName != 'null' ">
+                and a.siji_name like CONCAT('%',#{params.sijiName},'%')
+            </if>
+            <if test=" params.sijiPhone != '' and params.sijiPhone != null and params.sijiPhone != 'null' ">
+                and a.siji_phone like CONCAT('%',#{params.sijiPhone},'%')
+            </if>
+            <if test=" params.sijiIdNumber != '' and params.sijiIdNumber != null and params.sijiIdNumber != 'null' ">
+                and a.siji_id_number like CONCAT('%',#{params.sijiIdNumber},'%')
+            </if>
+            <if test="params.sexTypes != null and params.sexTypes != ''">
+                and a.sex_types = #{params.sexTypes}
+            </if>
+            <if test=" params.sijiEmail != '' and params.sijiEmail != null and params.sijiEmail != 'null' ">
+                and a.siji_email like CONCAT('%',#{params.sijiEmail},'%')
+            </if>
+
+        </where>
+        order by a.${params.sort} ${params.order}
+    </select>
+
+</mapper>

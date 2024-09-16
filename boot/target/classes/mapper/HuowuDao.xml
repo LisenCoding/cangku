@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.HuowuDao">
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        a.id as id
+        ,a.shangpin_order_id as shangpinOrderId
+        ,a.huowu_name as huowuName
+        ,a.huowu_uuid_number as huowuUuidNumber
+        ,a.huowu_types as huowuTypes
+        ,a.huowu_content as huowuContent
+        ,a.huowu_delete as huowuDelete
+        ,a.insert_time as insertTime
+        ,a.create_time as createTime
+    </sql>
+    <select id="selectListView" parameterType="map" resultType="com.entity.view.HuowuView" >
+        SELECT
+        <include refid="Base_Column_List" />
+        <!-- 级联表的字段 -->
+        ,shangpinOrder.shangpin_order_uuid_number as shangpinOrderUuidNumber
+        ,shangpinOrder.yonghu_id as shangpinOrderYonghuId
+        ,shangpinOrder.buy_number as buyNumber
+        ,shangpinOrder.shangpin_order_true_price as shangpinOrderTruePrice
+        ,shangpinOrder.shangpin_order_types as shangpinOrderTypes
+
+        FROM huowu  a
+        left JOIN shangpin_order shangpinOrder ON a.shangpin_order_id = shangpinOrder.id
+
+        <where>
+            <if test="params.ids != null">
+                and a.id in
+                <foreach item="item" index="index" collection="params.ids" open="(" separator="," close=")">
+                #{item}
+                </foreach>
+            </if>
+            <if test="params.shangpinOrderId != null and params.shangpinOrderId != ''">
+                and (
+                    a.shangpin_order_id = #{params.shangpinOrderId}
+                )
+            </if>
+            <if test=" params.huowuName != '' and params.huowuName != null and params.huowuName != 'null' ">
+                and a.huowu_name like CONCAT('%',#{params.huowuName},'%')
+            </if>
+            <if test=" params.huowuUuidNumber != '' and params.huowuUuidNumber != null and params.huowuUuidNumber != 'null' ">
+                and a.huowu_uuid_number like CONCAT('%',#{params.huowuUuidNumber},'%')
+            </if>
+            <if test="params.huowuTypes != null and params.huowuTypes != ''">
+                and a.huowu_types = #{params.huowuTypes}
+            </if>
+            <if test=" params.huowuContent != '' and params.huowuContent != null and params.huowuContent != 'null' ">
+                and a.huowu_content like CONCAT('%',#{params.huowuContent},'%')
+            </if>
+            <if test="params.huowuDeleteStart != null and params.huowuDeleteStart != ''">
+                <![CDATA[  and a.huowu_delete >= #{params.huowuDeleteStart}   ]]>
+            </if>
+            <if test="params.huowuDeleteEnd != null and params.huowuDeleteEnd != ''">
+                <![CDATA[  and a.huowu_delete <= #{params.huowuDeleteEnd}   ]]>
+            </if>
+             <if test="params.huowuDelete != null and params.huowuDelete != ''">
+                and a.huowu_delete = #{params.huowuDelete}
+             </if>
+            <if test=" params.insertTimeStart != '' and params.insertTimeStart != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(a.insert_time) >= UNIX_TIMESTAMP(#{params.insertTimeStart}) ]]>
+            </if>
+            <if test=" params.insertTimeEnd != '' and params.insertTimeEnd != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(a.insert_time) <= UNIX_TIMESTAMP(#{params.insertTimeEnd}) ]]>
+            </if>
+            <if test="params.insertTime != null and params.insertTime != ''">
+                and a.insert_time = #{params.insertTime}
+            </if>
+
+                <!-- 判断商品订单的id不为空 -->
+            <if test=" params.shangpinOrderIdNotNull != '' and params.shangpinOrderIdNotNull != null and params.shangpinOrderIdNotNull != 'null' ">
+                and a.shangpin_order_id IS NOT NULL
+            </if>
+            <if test=" params.shangpinOrderUuidNumber != '' and params.shangpinOrderUuidNumber != null and params.shangpinOrderUuidNumber != 'null' ">
+                and shangpinOrder.shangpin_order_uuid_number like CONCAT('%',#{params.shangpinOrderUuidNumber},'%')
+            </if>
+            <if test="params.addressId != null  and params.addressId != ''">
+                and shangpinOrder.address_id = #{params.addressId}
+            </if>
+            <if test="params.shangpinId != null  and params.shangpinId != ''">
+                and shangpinOrder.shangpin_id = #{params.shangpinId}
+            </if>
+            <if test="params.cheliangId != null  and params.cheliangId != ''">
+                and shangpinOrder.cheliang_id = #{params.cheliangId}
+            </if>
+            <if test="params.sijiId != null  and params.sijiId != ''">
+                and shangpinOrder.siji_id = #{params.sijiId}
+            </if>
+            <if test="params.yonghuId != null  and params.yonghuId != ''">
+                and shangpinOrder.yonghu_id = #{params.yonghuId}
+            </if>
+            <if test="params.buyNumberStart != null  and params.buyNumberStart != '' ">
+                <![CDATA[  and shangpinOrder.buy_number >= #{params.buyNumberStart}   ]]>
+            </if>
+            <if test="params.buyNumberEnd != null  and params.buyNumberEnd != '' ">
+                <![CDATA[  and shangpinOrder.buy_number <= #{params.buyNumberEnd}   ]]>
+            </if>
+            <if test="params.buyNumber != null  and params.buyNumber != '' ">
+                and shangpinOrder.buy_number = #{params.buyNumber}
+            </if>
+            <if test="params.shangpinOrderTruePriceStart != null ">
+                <![CDATA[  and shangpinOrder.shangpin_order_true_price >= #{params.shangpinOrderTruePriceStart}   ]]>
+            </if>
+            <if test="params.shangpinOrderTruePriceEnd != null ">
+                <![CDATA[  and shangpinOrder.shangpin_order_true_price <= #{params.shangpinOrderTruePriceEnd}   ]]>
+            </if>
+            <if test="params.shangpinOrderTruePrice != null and params.shangpinOrderTruePrice != ''">
+                and a.shangpin_order_true_price = #{params.shangpinOrderTruePrice}
+            </if>
+            <if test="params.shangpinOrderTypes != null  and params.shangpinOrderTypes != ''">
+                and shangpinOrder.shangpin_order_types = #{params.shangpinOrderTypes}
+            </if>
+
+            <if test=" params.insertTimeStart != '' and params.insertTimeStart != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(shangpinOrder.insert_time) >= UNIX_TIMESTAMP(#{params.insertTimeStart}) ]]>
+            </if>
+            <if test=" params.insertTimeEnd != '' and params.insertTimeEnd != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(shangpinOrder.insert_time) <= UNIX_TIMESTAMP(#{params.insertTimeEnd}) ]]>
+            </if>
+            <if test="params.insertTime != null and params.insertTime != ''">
+                and a.insert_time = #{params.insertTime}
+            </if>
+        </where>
+        order by a.${params.sort} ${params.order}
+    </select>
+
+</mapper>

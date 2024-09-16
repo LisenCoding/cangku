@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <title>商品收藏</title>
+    <meta name="keywords" content=""/>
+    <meta name="description" content=""/>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="../../layui/css/layui.css">
+    <link rel="stylesheet" href="../../xznstatic/css/common.css"/>
+    <link rel="stylesheet" href="../../xznstatic/css/style.css"/>
+    <script type="text/javascript" src="../../xznstatic/js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="../../xznstatic/js/jquery.SuperSlide.2.1.1.js"></script>
+    <link rel="stylesheet" href="../../xznstatic/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../../css/theme.css"/>
+</head>
+<style>
+    .center-container {
+        width: 1200px;
+        margin: 0 auto;
+        margin-top: 20px;
+        display: flex;
+        margin-bottom: 20px;
+    }
+    .index-sec1{ height: auto; width: 20%;background-color: #fff}
+    .sec1-left{ width: 100%; height: auto; margin-top: 10px; padding-left: 17px;}
+    .sec1-left ul{ margin-top: 20px;}
+    .sec1-left li{ transition: all 0.6s; height: 45px; border-bottom: 1px solid #d8d8d8; margin:15px 0px; width: 70%; line-height: 45px;}
+    .sec1-left li{  font-size: 15px; color: #333; height: 45px; line-height: 45px; transition: all 0.6s;background-color: var(--publicSubColor)}
+    .sec1-left .p1{ font-size: 20px; color: #333333; font-weight: bold; font-family: arial; text-transform: uppercase;line-height: 1; margin-top: 20px;}
+    .sec1-left .p2{ font-size: 22px; color: #333333; padding: 25px 0 0 0; line-height: 1;}
+    .sec1-left .p2 b{ display: block; width: 31px; background: #666; height: 1px; margin-top: 30px;}
+    .sec1-left li i{ display: inline-block;font-size: 25px; width: 10px; transition: all 0.6s;
+        margin-right: 20px; vertical-align:-3px; margin-left: 5px;}
+    .sec1-left li:hover i,.sec1-left li.on i{ background-position: -85px -42px;}
+    .sec1-left li span{ display: inline-block; height: 1px; width: 5px; background: #666; vertical-align:middle; margin-right: 10px; transition: all 0.6s;}
+    .sec1-left li:hover b,.sec1-left li:hover,
+    .sec1-left li.on b,.sec1-left li.on{ color: #fff;}
+    .sec1-left li:hover span,.sec1-left li.on  span{ background: #fff; width: 22px;}
+    .sec1-left li:hover,.sec1-left li.on{ font-size: 17px;background: dodgerblue;width: 90%; border-bottom-color: dodgerblue;}
+    ul, li {list-style: none;margin: 0;padding: 0;}
+    a {text-decoration: none;}
+    p{margin: 0;padding: 0;}
+    i {font-style: normal;}</style>
+<body class='bodyClass'>
+<div id="app">
+    <el-dialog title="弹出内容" :visible.sync="showContentModal" :modal-append-to-body="false">
+        <div class="content" style="word-break: break-all;" v-html="showContent">
+        </div>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="showContentModal = false">关 闭</el-button>
+        </div>
+    </el-dialog>
+<!-- 标题 -->
+    <!-- 标题 -->
+    <div class="center-container">
+        <!-- 个人中心菜单 config.js-->
+<div class="index-sec1">
+    <div class="sec1-left fl">
+        <p class="p1">USER / CENTER</p>
+        <p class="p2">商品收藏<b></b></p>
+        <ul>
+            <li v-for="(item,index) in centerMenu" v-bind:key="index" :class="item.url=='../shangpinCollection/list.html'?'on':''" @click="jump(item.url)">
+                <i class="layui-icon">&#xe756;</i><span></span>{{item.name}}
+            </li>
+        </ul>
+    </div>
+</div>        <!-- 个人中心菜单 -->
+        <div class="right-container sub_borderColor" :style='{"padding":"20px","boxShadow":"0px rgba(255,0,0,.8)","margin":"0","backgroundColor":"#fff","borderRadius":"0","borderWidth":"1px","borderStyle":"solid","width":"80%"}'>
+            <div style="display: flex;flex-wrap: wrap;justify-content: space-evenly;">
+                <div v-for="(item,index) in dataList" :key="index" style="flex: 0 0 25%;padding: 3px">
+                    <div :style='{"padding":"10px","borderColor":"var(--publicSubColor)","boxShadow":"0 0 6px var(--publicSubColor)","margin":"0 0 10px 0","borderColor":"dodgerblue","backgroundColor":"#fff","borderRadius":"4px","borderWidth":"0","borderStyle":"solid"}'>
+                            <i @click="deleteShangpinCollection(item.id)" class="layui-icon" style="float:right;color:red;margin-top: -10px;font-size:20px">&#xe640;</i>
+                    <!-- class="animation-box"-->
+                        <img @click="jumpCheck('../shangpin/detail.html?id='+item.shangpinId , item.shangpinDelete == null?'':item.shangpinDelete , item.shangxiaTypes == null?'':item.shangxiaTypes)"
+                             :style='{"boxShadow":"0 0 0px rgba(255,0,0,.8)","borderColor":"dodgerblue","borderRadius":"0","borderWidth":"0","width":"100%","borderStyle":"solid","height":"230px"}'
+                             :src="item.shangpinPhoto?baseUrl+item.shangpinPhoto.split(',')[0]:''">
+                        <div @click="jumpCheck('../shangpin/detail.html?id='+item.shangpinId , item.shangpinDelete == null?'':item.shangpinDelete , item.shangxiaTypes == null?'':item.shangxiaTypes)">
+                            <div v-if="item.shangpinNewMoney"
+                                 :style='{"padding":"0","margin":"10px 0 0 0","backgroundColor":"rgba(0,0,0,0)","color":"red","borderRadius":"0","textAlign":"left","width":"100%","fontSize":"16px"}'>
+                                {{item.shangpinNewMoney}} RMB
+                            </div>
+                            <div v-else
+                                 :style='{"padding":"0","margin":"10px 0 0 0","backgroundColor":"rgba(0,0,0,0)","color":"red","borderRadius":"0","textAlign":"left","width":"100%","fontSize":"16px"}'>
+                                {{item.shangpinValue}}
+                            </div>
+                            <div :style='{"isshow":true,"padding":"0","margin":"5px 0 0 0","backgroundColor":"rgba(0,0,0,0)","color":"#666","borderRadius":"0","textAlign":"right","width":"100%","fontSize":"12px"}'>
+                                {{item.shangpinName}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pager" style="margin-bottom: 50px;" id="pager" :style="{textAlign:'center'}"></div>
+        </div>
+    </div></div>
+
+<script src="../../xznstatic/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../xznstatic/js/echarts.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../layui/layui.js"></script>
+<script src="../../js/vue.js"></script>
+<!-- 引入element组件库 -->
+<script src="../../xznstatic/js/element.min.js"></script>
+<!-- 引入element样式 -->
+<link rel="stylesheet" href="../../xznstatic/css/element.min.css">
+<script src="../../js/config.js"></script>
+<script src="../../modules/config.js"></script>
+<script src="../../js/utils.js"></script>
+
+<script type="text/javascript">
+    Vue.prototype.myFilters = function (msg) {
+        if(msg==null || msg==""){
+            return "";
+        }else if (msg.length>20){
+            msg.replace(/\n/g, "<br>");
+            return msg.substring(0,30)+"......";
+        }else{
+            return msg.replace(/\n/g, "<br>");
+        }
+    };
+    var vue = new Vue({
+        el: '#app',
+        data: {
+            userId: localStorage.getItem("userid"),//当前登录人的id
+            sessionTable: localStorage.getItem("userTable"),//登录账户所在表名
+            role: localStorage.getItem("role"),//权限
+            form:{
+                shangpinId: '',
+                yonghuId: '',
+                shangpinCollectionTypes: '',//数字
+                shangpinCollectionValue: '',//数字对应的值
+                insertTime: '',
+                createTime: '',
+            },
+            //小菜单
+            centerMenu: centerMenu,
+            //项目路径
+            baseUrl:"",
+            //弹出内容模态框
+            showContentModal:false,
+            showContent:"",
+            shangpinCollectionTypesList: [],
+            shangpinTypesList: [],
+
+            //查询条件
+            searchForm: {
+                page: 1
+                ,limit: 8
+                ,sort: "id"//字段
+                ,order: "desc"//asc desc
+                ,yonghuId: localStorage.getItem('userid')//只能查询自己
+                    ,shangpinCollectionTypes: 1
+                ,yonghuId : localStorage.getItem('userid')
+                ,shangpinName: null
+                ,shangpinTypes: null
+            },
+
+            dataList: [],
+        },
+        filters: {
+            subString: function(val) {
+                if (val) {
+                    val = val.replace(/<[^<>]+>/g, '').replace(/undefined/g, '');
+                    if (val.length > 60) {
+                        val = val.substring(0, 60);
+                        val+='...';
+                    }
+                    return val;
+                }
+                return '';
+            }
+        },
+        computed: {
+        },
+        methods: {
+            isAuth(tablename, button) {
+                return isFrontAuth(tablename, button);
+            },
+            jump(url) {
+                jump(url);
+            },
+            jumpCheck(url,check1,check2) {
+                if(check1 == "2" || check1 == 2){//级联表的逻辑删除字段[1:未删除 2:已删除]
+                    layui.layer.msg("已经被删除", {
+                        time: 2000,
+                        icon: 2
+                    });
+                    return false;
+                }
+                if(check2 == "2"  || check2 == 2){//是否下架[1:上架 2:下架]
+                    layui.layer.msg("已经下架", {
+                        time: 2000,
+                        icon: 2
+                    });
+                    return false;
+                }
+                this.jump(url);
+            },
+            showContentFunction(content) {
+                this.showContentModal=true;
+                this.showContent=content.replaceAll(/\n/g, "<br>").replaceAll("src=\"upload/","src=\""+this.baseUrl+"upload/");
+            },
+            wuyong(id) {
+                var mymessage = confirm("确定要    吗？");if(!mymessage){return false;}
+                layui.http.requestJson(`shangpinCollection/update`, 'post', {
+                    id:id,
+//                    shangpinCollectionTypes:1,
+                }, function (res) {
+                    if(res.code == 0){
+                        layui.layer.msg('操作成功', {time: 2000, icon: 6 }, function () {window.location.reload();});
+                    }else{
+                        layui.layer.msg(res.msg, {time: 5000,icon: 5});
+                    }
+                });
+            },
+            deleteData(data){
+                var mymessage = confirm("确定要删除这条数据吗？");
+                if(!mymessage){
+                    return false;
+                }
+                // 删除信息
+                layui.http.requestJson(`shangpinCollection/delete`, 'post', [data.id], (res) => {
+                    if(res.code==0){
+                        layer.msg('删除成功', {
+                            time: 2000,
+                            icon: 6
+                        });
+                        window.location.reload();
+                    }else{
+                        layer.msg(res.msg, {
+                            time: 2000,
+                            icon: 2
+                        });
+                    }
+                });
+            },
+            deleteShangpinCollection(id){
+                layui.layer.confirm('确认要删除这个收藏吗？', {
+                    btn : [ '确定', '取消' ]//按钮
+                }, function(index) {
+                    var paramArray = [];
+                    paramArray.push(id);
+                    layui.http.requestJson('shangpinCollection/delete', 'post',paramArray, function (res) {
+                        if (res.code == 0) {
+                            layui.layer.msg('删除成功', {
+                                time: 2000,
+                                icon: 6
+                            });
+                            location.reload();
+                        } else {
+                            layui.layer.msg(res.msg, {
+                                time: 2000,
+                                icon: 2
+                            });
+                        }
+                    });
+                });
+            }
+
+        }
+    });
+
+    layui.use(['layer', 'element', 'carousel', 'laypage', 'http', 'jquery', 'laydate', 'tinymce'], function() {
+        var layer = layui.layer;
+        var element = layui.element;
+        var carousel = layui.carousel;
+        var laypage = layui.laypage;
+        var http = layui.http;
+        var laydate = layui.laydate;
+        var tinymce = layui.tinymce;
+        window.jQuery = window.$ = jquery = layui.jquery;
+        vue.baseUrl = http.baseurl
+
+        localStorage.setItem("goUtl","./pages/shangpinCollection/list2.html")
+
+        // var id = http.getParam('id');
+
+        //类型的动态搜素
+        $(document).on("click", ".thisTableType-search", function (e) {
+            vue.searchForm.shangpinCollectionTypes = $(this).attr('index');
+            pageList();
+        });
+
+
+           //当前表的 类型 字段 字典表查询方法
+           function shangpinCollectionTypesSelect() {
+               http.request("dictionary/page?page=1&limit=100&sort=&order=&dicCode=shangpin_collection_types", 'get', {}, function (res) {
+                   if(res.code == 0){
+                       vue.shangpinCollectionTypesList = res.data.list;
+                   }
+               });
+           }
+
+            //级联表的 商品类型 字段 字典表查询
+            shangpinTypesSelect();
+            //级联表的 商品类型 字段 字典表查询方法
+            function shangpinTypesSelect() {
+                http.request("dictionary/page?page=1&limit=100&sort=&order=&dicCode=shangpin_types", 'get', {}, function (res) {
+                    if(res.code == 0){
+                        vue.shangpinTypesList = res.data.list;
+                    }
+                });
+            }
+            //级联表的 是否上架 字段 字典表查询方法
+            function shangxiaTypesSelect() {
+                http.request("dictionary/page?page=1&limit=100&sort=&order=&dicCode=shangxia_types", 'get', {}, function (res) {
+                    if(res.code == 0){
+                        vue.shangxiaTypesList = res.data.list;
+                    }
+                });
+            }
+            // 分页列表
+            pageList();
+
+            // 搜索按钮
+            jquery('#btn-search').click(function (e) {
+                pageList();
+            });
+
+            function pageList() {
+                // 获取列表数据
+                http.request('shangpinCollection/list', 'get', vue.searchForm, function (res) {
+                    vue.dataList = res.data.list;
+                    // 分页
+                    laypage.render({
+                        elem: 'pager',
+                        count: res.data.total,
+                        limit: vue.searchForm.limit,
+                        groups: 3,
+                        layout: ["prev", "page", "next"],
+                        jump: function (obj, first) {
+                            vue.searchForm.page = obj.curr;//翻页
+                            //首次不执行
+                            if (!first) {
+                                http.request('shangpinCollection/list', 'get', vue.searchForm, function (res1) {
+                                    vue.dataList = res1.data.list;
+                                })
+                            }
+                        }
+                    });
+                });
+            }
+    });
+
+    window.xznSlide = function () {
+        jQuery(".banner").slide({mainCell: ".bd ul", autoPlay: true, interTime: 5000});
+        jQuery("#ifocus").slide({
+            titCell: "#ifocus_btn li",
+            mainCell: "#ifocus_piclist ul",
+            effect: "leftLoop",
+            delayTime: 200,
+            autoPlay: true,
+            triggerTime: 0
+        });
+        jQuery("#ifocus").slide({titCell: "#ifocus_btn li", mainCell: "#ifocus_tx ul", delayTime: 0, autoPlay: true});
+        jQuery(".product_list").slide({
+            mainCell: ".bd ul",
+            autoPage: true,
+            effect: "leftLoop",
+            autoPlay: true,
+            vis: 5,
+            trigger: "click",
+            interTime: 4000
+        });
+    };
+</script>
+</body>
+</html>

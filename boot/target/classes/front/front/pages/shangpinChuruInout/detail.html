@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>出入库详情页</title>
+    <link rel="stylesheet" href="../../layui/css/layui.css">
+    <!-- 样式 -->
+    <link rel="stylesheet" href="../../css/style.css"/>
+    <!-- 主题（主要颜色设置） -->
+    <link rel="stylesheet" href="../../css/theme.css"/>
+    <!-- 通用的css -->
+    <link rel="stylesheet" href="../../css/common.css"/>
+    <link rel="stylesheet" href="../../xznstatic/css/bootstrap.min.css">
+</head>
+<style>
+</style>
+<body>
+
+    <div id="app">
+    </div>
+
+
+    <script src="../../layui/layui.js"></script>
+    <script src="../../js/vue.js"></script>
+    <!-- 引入element组件库 -->
+    <script src="../../xznstatic/js/element.min.js"></script>
+    <!-- 引入element样式 -->
+    <link rel="stylesheet" href="../../xznstatic/css/element.min.css">
+    <!-- 组件配置信息 -->
+    <script src="../../js/config.js"></script>
+    <!-- 扩展插件配置信息 -->
+    <script src="../../modules/config.js"></script>
+    <!-- 工具方法 -->
+    <script src="../../js/utils.js"></script>
+
+    <script>
+        Vue.prototype.myFilters= function (msg) {
+            if(msg != null){
+                return msg.replace(/\n/g, "<br>");
+            }else{
+                return "";
+            }
+        };
+        var vue = new Vue({
+            el: '#app',
+            data: {
+                userId: localStorage.getItem("userid"),//当前登录人的id
+                sessionTable: localStorage.getItem("userTable"),//登录账户所在表名
+                role: localStorage.getItem("role"),//权限
+                user:{},//当前登录用户信息
+                // 轮播图
+                swiperList: [],//用于当前表的图片
+                // 数据详情
+                detail: {
+                    id: 0
+                },
+                //评分
+                shangpinChuruInoutLiuyanPingfenNumber: 3,
+                // 商品标题
+                title: '',
+                totalScore: 0,//评分
+                baseUrl:"",//路径
+                storeupFlag: 0,//收藏 [0为收藏 1已收藏]
+                //系统推荐
+                shangpinChuruInoutRecommendList: [],
+                    // 当前详情页表
+                detailTable: 'shangpinChuruInout',
+            },
+            methods: {
+                //分享
+                share(){
+                    let element = createElement("http://localhost:8080/wuliuguanlixitong/front/index.html?url="+"./pages/shangpinChuruInout/detail.html?id="+this.id);
+                    element.select();
+                    element.setSelectionRange(0, element.value.length);
+                    document.execCommand('copy');
+                    element.remove();
+                    layui.layer.msg('复制分享页面成功,快去分享吧!', {time: 2000,icon: 6});
+                },
+
+                jump(url) {
+                    jump(url)
+                },
+                isAuth(tablename, button) {
+                    return isFrontAuth(tablename, button)
+                },
+                //预约
+                shangpinChuruInoutYuyue(){
+                    let _this = this;
+                    var mymessage = confirm("确定要预约吗？");if(!mymessage){return false;}
+                    // localStorage.setItem('shangpinChuruInoutId', _this.detail.id);
+                    // _this.jump("../shangpinChuruInoutOrder/add.html");
+
+                    let data={
+                        shangpinChuruInoutId:_this.detail.id,
+                        yonghuId:localStorage.getItem("userid"),
+                        shangpinChuruInoutOrderYesnoTypes:1,
+                    }
+                    // 提交数据
+                    layui.http.requestJson('shangpinChuruInoutOrder/add', 'post', data, function (res) {
+                        if(res.code == 0) {
+                            layui.layer.msg('预约成功', {
+                                time: 2000,
+                                icon: 6
+                            }, function () {
+                                _this.jump("../shangpinChuruInoutOrder/list.html");
+                            });
+                        }else{
+                            layui.layer.msg(res.msg, {
+                                time: 5000,
+                                icon: 5
+                            });
+                        }
+                    });
+                },
+
+                }
+        });
+
+        layui.use(['layer', 'form', 'element', 'carousel', 'http', 'jquery', 'laypage', 'util'], function () {
+            var layer = layui.layer;
+            var util = layui.util;
+            var element = layui.element;
+            var form = layui.form;
+            var carousel = layui.carousel;
+            var http = layui.http;
+            var jquery = layui.jquery;
+            var laypage = layui.laypage;
+            vue.baseUrl = http.baseurl
+
+            localStorage.setItem("goUtl","./pages/shangpinChuruInout/detail.html?id="+ http.getParam('id'))
+
+            var limit = 10;
+
+            let table = localStorage.getItem("userTable");
+            if(table){
+                http.request(table+"/session", 'get', {}, function (data) {
+                    vue.user = data.data;
+                });
+            }
+
+            // 数据ID
+            var id = http.getParam('id');
+            vue.detail.id = id;
+        });
+    </script>
+</body>
+</html>

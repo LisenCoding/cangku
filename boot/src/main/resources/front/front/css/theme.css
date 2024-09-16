@@ -1,0 +1,221 @@
+/*定义全局css*/
+body {
+	/* 1 全局公共主颜色 */
+	--publicMainColor: #343638;
+	/* 1 全局公共副颜色 */
+	--publicSubColor: #7d7d85;
+}
+.bodyClass{
+}
+
+/*开始==================================导航栏样式24=========================================开始*/
+.homeHeight{height: 79vh !important}
+#header{height:auto;background:#fff;border-bottom:0;top:0;left:0;width:100%;z-index:1}
+#header .nav-top{display:flex;align-items:center;padding:0 20px;font-size:16px;color:#2a8a15;box-sizing:border-box;height:60px;background:var(--publicMainColor,orange);box-shadow:0 1px 6px dodgerblue;justify-content:center;position:relative;z-index:1}
+#header .nav-top-img{width:124px;height:40px;padding:0;margin:0;border-radius:6px;border-width:0;border-style:solid;border-color:dodgerblue;box-shadow:0 0 6px rgba(0,0,0,0)}
+#header .nav-top-title{line-height:40px;font-size:24px;color:rgba(255,255,255,1);padding:0 10px;margin:0 10px;border-radius:6px;border-width:0;border-style:solid;border-color:dodgerblue;background-color:rgba(0,0,0,0);box-shadow:0 0 6px rgba(0,0,0,0)}
+#header .nav-top-tel{line-height:40px;font-size:16px;color:#333;padding:0 10px;margin:0;border-radius:6px;border-width:0;border-style:solid;border-color:dodgerblue;box-shadow:0 0 6px rgba(0,0,0,0)}
+#header .navs{display:flex;padding:0 20px;align-items:center;box-sizing:border-box;height:100px;background:#DDDDDD;box-shadow:0 1px 6px rgba(0,0,0,0);justify-content:center}
+#header .navs1{width:200px;height:100vh;background:darkgoldenrod;position:absolute;top:0;display:block;padding:0;overflow-y:scroll;scrollbar-width:none;-ms-overflow-style:none}
+#header .navs.navs1::-webkit-scrollbar{display:none}
+#header .navs1 .list{display:flex;flex-direction:column}
+#header .navs .title{width:auto;line-height:40px;font-size:16px;color:#333;padding:0 10px;margin:0 5px;border-radius:6px;border-width:0;border-style:solid;border-color:dodgerblue;background-color:rgba(0,0,0,0);box-shadow:0 0 6px rgba(0,0,0,0)}
+#header .navs li{display:inline-block;width:auto;line-height:50px;padding:0 10px;margin:10px 5px 0;color:#333;font-size:16px;border-radius:40px;border-width:0;border-style:solid;border-color:dodgerblue;background-color:#f7f7f7;box-shadow:0px -20px 0px 0px #797979;text-align:center;box-sizing:border-box;cursor:pointer}
+#header .navs li a{color:inherit}
+#header .navs li.current a{color:inherit}
+#header .navs li a:hover{color:inherit}
+#header .navs li.current{color:rgba(0,0,0,1);font-size:16px;border-radius:50%;border-width:0;border-style:solid;border-color:dodgerblue;background-color:#f7f7f7;box-shadow:0px -20px 0px 0px var(--publicMainColor,orange);}
+#header .navs li:hover{color:rgba(0,0,0,1);font-size:16px;border-radius:40px;border-width:0;border-style:solid;border-color:dodgerblue;background-color:rgba(255,255,255,1);box-shadow:0px -20px 0px 0px var(--publicMainColor,orange);}
+/*结束==================================导航栏样式24=========================================结束*/
+
+/*layui下拉框边框颜色*/
+.layui-unselect{
+	border-color: dodgerblue;
+}
+
+/*home页面数据样式 开始*/
+	/*home页面数据样式 普通数据样式 开始*/
+	/*home页面数据样式 普通数据样式 结束*/
+/*home页面数据样式 结束*/
+
+/*list页面数据样式 开始*/
+	/*list页面数据样式 普通数据样式 开始*/
+.tox-pop{
+    z-index: -99999;
+}
+
+.show-reel a img{
+    width:100%;
+}
+.show-reel:nth-child(2){
+    margin:2em 0;
+}
+.agile-gallery{
+    position: relative;
+    overflow: hidden;
+    text-align: center;;
+}
+.agileits-caption {
+    background: rgba(0, 0, 0, 0.62);
+    padding: 2em 1em 1em 1em;
+    position: absolute;
+    left: 0;
+    bottom: -105%;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    -webkit-transition: .5s all;
+    transition: .5s all;
+    -moz-transition: .5s all;
+}
+.agile-gallery:hover .agileits-caption {
+    bottom: 0%;
+}
+.agileits-caption h4{
+    color: #FFFFFF;
+    margin: 0 0 .5em 0;
+    font-size: 1.5em;
+    font-weight: 600;
+    font-family: 'Laila', serif;
+    line-height: 8em;
+    text-transform: capitalize;
+}
+.agileits-caption p{
+    color: #FFFFFF;
+    font-size: 1.3em;
+    margin-top:  3px;
+}
+.gallery-grids {
+    padding: 5em 0;
+}
+	/*list页面数据样式 普通数据样式 结束*/
+/*list页面数据样式 结束*/
+
+/*鼠标移入样式 开始*/
+.animation-box:hover {
+    transform: perspective(10px) translate3d(-10px, -10px, 0px) scale(1) rotate(0deg) skew(0deg, 0deg);
+    transition: all 0.3s;
+}/*鼠标移入样式 结束*/
+
+
+/* 主页 轮播图选择框颜色 主*/
+#test1 .layui-carousel-ind li.layui-this {
+	background-color: var(--publicMainColor, #808080);
+	box-shadow: 0 0 6px var(--publicMainColor, #808080);
+}
+/* 个人中心轮播图 */
+#swiper .layui-carousel-ind li.layui-this {
+	background-color: var(--publicMainColor, #808080);
+	box-shadow: 0 0 6px var(--publicMainColor, #808080);
+}
+
+/* 大部分颜色 主 */
+.main_color {
+	color: var(--publicMainColor, #808080);
+}
+/* 边框颜色 主 */
+.main_borderColor{
+	border-color: var(--publicMainColor, #808080);
+}
+/* 背景颜色 主 */
+.main_backgroundColor {
+	background-color: var(--publicMainColor, #808080);
+}
+/* 登录页面单选按钮颜色 主 */
+.l-redio .layui-form-radioed>i {
+	font-size: 16px;
+	color: var(--publicMainColor, #808080);
+}
+.l-redio .layui-form-radioed>div {
+	font-size: 14px;
+	color: var(--publicMainColor, #808080);
+}
+
+/* 大部分颜色 副 */
+.sub_color {
+	color: var(--publicSubColor, #808080);
+}
+/* 边框颜色 副 */
+.sub_borderColor{
+	border-color: var(--publicSubColor, #808080);
+	box-shadow: 0 0 6px var(--publicSubColor, #808080);
+}
+/* 背景颜色 副 */
+.sub_backgroundColor {
+	background-color: var(--publicSubColor, #808080);
+}
+
+/* 分页颜色 */
+.layui-laypage .layui-laypage-curr .layui-laypage-em {
+	background-color: var(--publicMainColor, #808080);
+}
+
+/* 评论和简介背景颜色 */
+.detail-tab .layui-tab-card>.layui-tab-title .layui-this {
+	background-color: var(--publicMainColor, #808080);
+	color: #fff;
+	font-size: 14px;
+}
+#swiper .layui-carousel-ind li.layui-this {
+	background-color: var(--publicMainColor, #808080);
+}
+
+/* 个人中心 菜单点击颜色*/
+.center-container .layui-nav-tree .layui-nav-item.layui-this {
+	background-color: var(--publicSubColor, #808080);
+}
+/*个人中心 菜单鼠标移上颜色*/
+.center-container .layui-nav-tree .layui-nav-item:hover {
+	background-color:var(--publicMainColor, #808080);
+}
+/*个人中心 菜单下线颜色*/
+.center-container .layui-nav-tree .layui-nav-item {
+	border-color: var(--publicMainColor, #808080);
+	box-shadow: 0 0 0px var(--publicMainColor, #808080);
+}
+/*个人中心 输入框中字体颜色和边框颜色*/
+.right-container .input .layui-input {
+	color: var(--publicMainColor, #808080);
+	border-color: var(--publicMainColor, #808080);
+	box-shadow: 0 0 0px var(--publicMainColor, #808080);
+}
+/*个人中心 下拉框中字体颜色和边框颜色*/
+.right-container .select .layui-input {
+	color: var(--publicMainColor, #808080);
+	border-color: var(--publicMainColor, #808080);
+	box-shadow: 0 0 0px var(--publicMainColor, #808080);
+}
+/*个人中心 未知颜色*/
+.right-container .date .layui-input {
+	border-color: var(--publicMainColor, #808080);
+	box-shadow: 0 0 0px var(--publicMainColor, #808080);
+}
+
+/* 前台elementUI得下拉框内容颜色和边框颜色修改 */
+/* start */
+.el-select-dropdown__item.selected {
+	color: var(--publicMainColor, #808080);
+	font-weight: bold;
+}
+.el-select .el-input.is-focus .el-input__inner {
+	border-color: var(--publicMainColor, #808080);
+}
+.el-input--suffix .el-input__inner{
+	color:var(--publicMainColor, #808080);
+	border-color: var(--publicMainColor, #808080);
+}
+.el-select .el-input__inner:focus {
+	border-color: var(--publicMainColor, #808080);
+}
+/* end */
+/*=====================富文本框字体样式===========================================================================*/
+
+.ql-size-small {
+	font-size: 10px;
+}
+.ql-size-large {
+	font-size: 18px;
+}
+.ql-size-huge {
+	font-size: 32px;
+}
